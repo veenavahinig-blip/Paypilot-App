@@ -1,0 +1,321 @@
+<div class="sidebar">
+
+
+    <!-- Logo Section -->
+
+    <div class="logo">
+
+        <h2>💳 PayPilot</h2>
+
+        <p>Bill Service System</p>
+
+    </div>
+
+
+    <!-- Navigation Menu -->
+
+    <ul>
+
+
+        <li routerLink="/user-dashboard" routerLinkActive="active">
+
+            <span>🏠</span> Home
+
+        </li>
+
+
+        <li routerLink="/profile" routerLinkActive="active">
+
+            <span>👤</span> Profile
+
+        </li>
+
+
+        <li routerLink="/schedule-payments" routerLinkActive="active">
+
+            <span>📅</span> Schedule Payments
+
+        </li>
+
+
+        <li routerLink="/track-payments" routerLinkActive="active">
+
+            <span>📍</span> Track Payments
+
+        </li>
+
+
+        <li routerLink="/manage-bills" routerLinkActive="active">
+
+            <span>🧾</span> Manage Bills
+
+        </li>
+
+
+
+
+    </ul>
+
+
+    <!-- Logout -->
+
+    <button class="logout-btn" routerLink="/login">
+
+        🚪 Logout
+
+    </button>
+
+
+</div>
+
+<div class="profile-container">
+
+
+    <div class="profile-card">
+
+
+        <div class="profile-header">
+
+
+            <div class="profile-icon">
+
+                👤
+
+            </div>
+
+
+            <h2>My Profile</h2>
+
+
+            <p>Manage your personal information</p>
+
+
+        </div>
+
+
+        <!-- Personal Information -->
+
+
+        <div class="section-title">
+
+            Personal Information
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>User ID</label>
+
+                <input type="text"
+
+                       [(ngModel)]="user.userId"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>User Name</label>
+
+                <input type="text"
+
+                       [(ngModel)]="user.userName">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input type="email"
+
+                       [(ngModel)]="user.userEmail"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Gender</label>
+
+
+                <select [(ngModel)]="user.gender">
+
+
+                    <option value="Male">
+
+                        Male
+
+                    </option>
+
+
+                    <option value="Female">
+
+                        Female
+
+                    </option>
+
+
+                    <option value="Other">
+
+                        Other
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- Banking Information -->
+
+
+        <div class="section-title">
+
+            Banking Information
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>Bank Account Number</label>
+
+
+                <input type="text"
+
+                       [value]="maskedAccountNumber"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Banking Partner</label>
+
+
+                <input type="text"
+
+                       [(ngModel)]="user.bankingPartner"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>IFSC Code</label>
+
+
+                <input type="text"
+
+                       [(ngModel)]="user.ifscCode"
+
+                       readonly>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+        <!-- Verification Details -->
+
+
+        <div class="section-title">
+
+            Verification Details
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>PAN Number</label>
+
+
+                <input type="text"
+
+                       [(ngModel)]="user.panDetails"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Role</label>
+
+
+                <input type="text"
+
+                       [(ngModel)]="user.role"
+
+                       readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Verification Status</label>
+
+
+                <input type="text"
+
+                       [value]="user.verified ? 'Verified ✅' : 'Not Verified ❌'"
+
+                       readonly>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+
+          class="update-btn"
+
+          (click)="updateProfile()">
+
+          Save Changes
+
+        </button>
+
+
+    </div>
+
+
+</div>
+ 

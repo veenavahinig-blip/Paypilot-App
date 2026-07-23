@@ -1,0 +1,114 @@
+<div class="main-container">
+ 
+  <form [formGroup]="verifyForm">
+ 
+    <div class="card">
+ 
+      <h2>Verify OTP & Reset Password</h2>
+ 
+      <!-- OTP -->
+ 
+      <div class="otp-row">
+ 
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          formControlName="otp">
+ 
+        <button
+          type="button"
+          class="resend-btn"
+          (click)="resendOtp()">
+          Resend
+        </button>
+ 
+      </div>
+ 
+      <div *ngIf="verifyForm.get('otp')?.touched &&
+                  verifyForm.get('otp')?.invalid">
+ 
+        <small style="color:red">
+          OTP is required
+        </small>
+ 
+      </div>
+ 
+      <!-- New Password -->
+ 
+      <input
+        type="password"
+        placeholder="New Password"
+        formControlName="newPassword">
+ 
+      <div *ngIf="verifyForm.get('newPassword')?.touched &&
+                  verifyForm.get('newPassword')?.invalid">
+ 
+        <small
+          style="color:red"
+          *ngIf="verifyForm.get('newPassword')?.errors?.required">
+ 
+          New Password is required
+ 
+        </small>
+ 
+        <small
+          style="color:red"
+          *ngIf="verifyForm.get('newPassword')?.errors?.pattern">
+ 
+          Password must contain uppercase, lowercase and number
+ 
+        </small>
+ 
+      </div>
+ 
+      <br>
+ 
+      <!-- Confirm Password -->
+ 
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        formControlName="confirmPassword">
+ 
+      <div *ngIf="verifyForm.get('confirmPassword')?.touched &&
+                  verifyForm.get('confirmPassword')?.invalid">
+ 
+        <small
+          style="color:red"
+          *ngIf="verifyForm.get('confirmPassword')?.errors?.required">
+ 
+          Confirm Password is required
+ 
+        </small>
+ 
+      </div>
+ 
+      <!-- Password Match -->
+ 
+      <div *ngIf="
+          verifyForm.value.newPassword &&
+          verifyForm.value.confirmPassword &&
+          verifyForm.value.newPassword !== verifyForm.value.confirmPassword">
+ 
+        <small style="color:red">
+          Passwords do not match
+        </small>
+ 
+      </div>
+ 
+      <button
+        type="button"
+        class="reset-btn"
+        (click)="resetPassword()">
+ 
+        Reset Password
+ 
+      </button>
+ 
+    </div>
+ 
+  </form>
+ 
+</div>
+ 
+ 

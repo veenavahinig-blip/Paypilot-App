@@ -1,0 +1,564 @@
+<div class="sidebar">
+
+
+    <!-- Logo Section -->
+
+    <div class="logo">
+
+        <h2>💳 PayPilot</h2>
+
+        <p>Bill Service System</p>
+
+    </div>
+
+
+    <!-- Navigation Menu -->
+
+    <ul>
+
+
+        <li routerLink="/user-dashboard" routerLinkActive="active">
+
+            <span>🏠</span> Home
+
+        </li>
+
+
+        <li routerLink="/profile" routerLinkActive="active">
+
+            <span>👤</span> Profile
+
+        </li>
+
+
+        <li routerLink="/schedule-payments" routerLinkActive="active">
+
+            <span>📅</span> Schedule Payments
+
+        </li>
+
+
+        <li routerLink="/track-payments" routerLinkActive="active">
+
+            <span>📍</span> Track Payments
+
+        </li>
+
+
+        <li routerLink="/manage-bills" routerLinkActive="active">
+
+            <span>🧾</span> Manage Bills
+
+        </li>
+
+
+
+
+    </ul>
+
+
+    <!-- Logout Button -->
+
+    <button class="logout-btn" routerLink="/login">
+
+        🚪 Logout
+
+    </button>
+
+
+</div>
+
+<div class="top-banner">
+
+
+  <div class="banner-left">
+
+
+    <h2>
+
+      💳 PayPilot Payment Tracking Service
+
+    </h2>
+
+
+    <p>
+
+      Monitor and track all your bill
+
+      payment transactions securely.
+
+    </p>
+
+
+  </div>
+
+
+  <div class="banner-right">
+
+
+    <span class="tag">
+
+      🔒 100% Secure
+
+    </span>
+
+
+    <span class="tag">
+
+      ⚡ Fast Payments
+
+    </span>
+
+
+    <span class="tag">
+
+      ✅ Verified Transactions
+
+    </span>
+
+
+    <span class="tag">
+
+      📊 Smart Tracking
+
+    </span>
+
+
+  </div>
+
+
+</div>
+
+
+<div class="page-content">
+
+
+  <div class="filter-card">
+
+
+    <h3>Filter Transactions</h3>
+
+
+    <div class="filter-grid">
+
+
+      <input
+
+        type="text"
+
+        placeholder="Payment ID"
+
+        [(ngModel)]="paymentIdFilter">
+
+
+      <input
+
+        type="text"
+
+        placeholder="Bill ID"
+
+        [(ngModel)]="billIdFilter">
+
+
+      <select
+
+        [(ngModel)]="statusFilter">
+
+
+        <option value="">
+
+          All Status
+
+        </option>
+
+
+        <option value="SUCCESS">
+
+          SUCCESS
+
+        </option>
+
+
+        <option value="FAILED">
+
+          FAILED
+
+        </option>
+
+
+      </select>
+
+
+      <input
+
+        type="date"
+
+        [(ngModel)]="fromDate">
+
+
+      <input
+
+        type="date"
+
+        [(ngModel)]="toDate">
+
+
+      <button
+
+        class="search-btn"
+
+        (click)="applyFilters()">
+
+
+        Search
+
+
+      </button>
+
+
+      <button
+
+        class="reset-btn"
+
+        (click)="clearFilters()">
+
+
+        Reset
+
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+ <div class="history-card">
+
+
+    <h3>
+
+        Latest Payment Transactions
+
+    </h3>
+
+
+    <table>
+
+
+        <thead>
+
+
+            <tr>
+
+
+                <th>Payment ID</th>
+
+
+                <th>Bill ID</th>
+
+
+                <th>Amount</th>
+
+
+                <th>Payment Date</th>
+
+
+                <th>Status</th>
+
+
+                <th>Message</th>
+
+
+                <th>Action</th>
+
+
+            </tr>
+
+
+        </thead>
+
+
+        <tbody>
+
+
+            <tr *ngFor="let payment of filteredTransactions">
+
+
+                <td>
+
+                    {{payment.paymentId}}
+
+                </td>
+
+
+                <td>
+
+                    {{payment.billId}}
+
+                </td>
+
+
+                <td>
+
+                    ₹{{payment.paidAmount}}
+
+                </td>
+
+
+                <td>
+
+                    {{payment.paymentDate | date:'dd-MM-yyyy HH:mm'}}
+
+                </td>
+
+
+                <td>
+
+
+                    <span
+
+                        class="success-badge"
+
+                        *ngIf="payment.paymentStatus === 'SUCCESS'">
+
+
+                        SUCCESS
+
+
+                    </span>
+
+
+                    <span
+
+                        class="failed-badge"
+
+                        *ngIf="payment.paymentStatus === 'FAILED'">
+
+
+                        FAILED
+
+
+                    </span>
+
+
+                </td>
+
+
+                <td>
+
+                    {{payment.message}}
+
+                </td>
+
+
+                <td>
+
+
+                    <button
+
+                        class="view-btn"
+
+                        (click)="openPaymentDetails(payment)">
+
+
+                        View
+
+
+                    </button>
+
+
+                </td>
+
+
+            </tr>
+
+
+            <tr *ngIf="filteredTransactions.length === 0">
+
+
+                <td colspan="7" class="empty-row">
+
+
+                    No Transactions Found
+
+
+                </td>
+
+
+            </tr>
+
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+
+
+<!-- PAYMENT DETAILS POPUP -->
+
+
+<div
+
+    class="payment-modal-overlay"
+
+    *ngIf="showPaymentModal">
+
+
+    <div class="payment-details-modal">
+
+
+        <span
+
+            class="payment-close"
+
+            (click)="closePaymentDetails()">
+
+
+            ✕
+
+
+        </span>
+
+
+        <h2>
+
+            Payment Transaction Details
+
+        </h2>
+
+
+        <div class="details-container">
+
+
+            <div class="detail-card">
+
+
+                <label>Payment ID</label>
+
+
+                <span>
+
+                    {{selectedPayment?.paymentId}}
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card">
+
+
+                <label>Bill ID</label>
+
+
+                <span>
+
+                    {{selectedPayment?.billId}}
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card">
+
+
+                <label>User ID</label>
+
+
+                <span>
+
+                    {{selectedPayment?.userId}}
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card">
+
+
+                <label>Amount Paid</label>
+
+
+                <span>
+
+                    ₹{{selectedPayment?.paidAmount}}
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card">
+
+
+                <label>Payment Status</label>
+
+
+                <span class="green-text">
+
+
+                    {{selectedPayment?.paymentStatus}}
+
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card">
+
+
+                <label>Payment Date</label>
+
+
+                <span>
+
+
+                    {{selectedPayment?.paymentDate}}
+
+
+                </span>
+
+
+            </div>
+
+
+            <div class="detail-card full-width">
+
+
+                <label>Transaction Message</label>
+
+
+                <span>
+
+
+                    {{selectedPayment?.message}}
+
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+ 

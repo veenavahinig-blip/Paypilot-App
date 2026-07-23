@@ -1,0 +1,244 @@
+<div class="register-container">
+ 
+  <div class="left-panel">
+ 
+    <div class="logo">
+      <h1>PayPilot</h1>
+      <span>Bill Service</span>
+    </div>
+ 
+    <h2>
+      Create Your Account
+      and Get Started
+    </h2>
+ 
+    <p>
+      Join PayPilot Bill Service and manage,
+      track and pay all your bills in one place
+      with ease and security.
+    </p>
+ 
+    <img src="assets/paypilot-register.png">
+ 
+  </div>
+ 
+  <div class="right-panel">
+ 
+    <h1>Create Account</h1>
+ 
+    <p>
+      Fill in the details below to create your account
+    </p>
+ 
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+ 
+  <div class="row">
+ 
+    <div class="field">
+      <label>Full Name</label>
+ 
+      <input
+        type="text"
+        formControlName="userName"
+        placeholder="Enter your full name">
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('userName')?.touched &&
+               registerForm.get('userName')?.invalid">
+        Full Name is required and should contain only alphabets
+      </small>
+    </div>
+ 
+    <div class="field">
+      <label>Email Address</label>
+ 
+      <input
+        type="email"
+        formControlName="userEmail"
+        placeholder="Enter your email">
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('userEmail')?.touched &&
+               registerForm.get('userEmail')?.invalid">
+        Enter a valid Email Address
+      </small>
+    </div>
+ 
+  </div>
+ 
+  <div class="field">
+ 
+    <label>Gender</label>
+ 
+    <select formControlName="gender">
+      <option value="">Select Gender</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+ 
+    <small style="color:red"
+      *ngIf="registerForm.get('gender')?.touched &&
+             registerForm.get('gender')?.invalid">
+      Gender is required
+    </small>
+ 
+  </div>
+ 
+  <div class="row">
+ 
+    <div class="field">
+ 
+      <label>PAN Details</label>
+ 
+      <input
+        type="text"
+        formControlName="panDetails"
+        placeholder="Enter PAN Number">
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('panDetails')?.touched &&
+               registerForm.get('panDetails')?.invalid">
+        Enter a valid PAN Number
+      </small>
+ 
+    </div>
+ 
+    <div class="field">
+ 
+      <label>Bank Account Number</label>
+ 
+      <input
+        type="text"
+        formControlName="bankAccountNumber"
+        placeholder="Enter Account Number">
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('bankAccountNumber')?.touched &&
+               registerForm.get('bankAccountNumber')?.invalid">
+        Enter a valid Account Number
+      </small>
+ 
+    </div>
+ 
+  </div>
+ 
+  <div class="row">
+ 
+    <div class="field">
+ 
+      <label>IFSC Code</label>
+ 
+      <input
+        type="text"
+        formControlName="ifscCode"
+        placeholder="Enter IFSC Code">
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('ifscCode')?.touched &&
+               registerForm.get('ifscCode')?.invalid">
+        Enter a valid IFSC Code
+      </small>
+ 
+    </div>
+ 
+    <div class="field">
+ 
+      <label>Banking Partner</label>
+ 
+      <select formControlName="bankingPartner">
+        <option value="">Select Partner</option>
+        <option>SBI</option>
+        <option>HDFC</option>
+        <option>ICICI</option>
+        <option>AXIS</option>
+      </select>
+ 
+      <small style="color:red"
+        *ngIf="registerForm.get('bankingPartner')?.touched &&
+               registerForm.get('bankingPartner')?.invalid">
+        Please select a Banking Partner
+      </small>
+ 
+    </div>
+ 
+  </div>
+ 
+  <div class="password-section">
+ 
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Create Password">
+ 
+    <small style="color:red"
+      *ngIf="registerForm.get('password')?.touched &&
+             registerForm.get('password')?.invalid">
+      Password must contain uppercase, lowercase, number and special character
+    </small>
+ 
+  </div>
+ 
+  <div class="password-section">
+ 
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Confirm Password">
+ 
+    <small style="color:red"
+      *ngIf="registerForm.get('confirmPassword')?.touched &&
+             registerForm.get('confirmPassword')?.invalid">
+      Confirm Password is required
+    </small>
+    <br>
+    
+    <div class="form-group">
+    <div id="register-recaptcha"></div>
+  </div>
+
+    <div class="otp-section">
+ 
+    <input
+      type="text"
+      formControlName="otp"
+      placeholder="Enter OTP">
+ 
+    <button
+      type="button"
+      class="otp-btn"
+      (click)="sendOtp()">
+      Send OTP
+    </button>
+ 
+  </div>
+ 
+ 
+  </div>
+    
+  
+  
+  <button
+    class="register-btn"
+    type="submit">
+  
+    Create Account
+  
+  </button>
+ 
+</form>
+ 
+ 
+    <div class="login-link">
+ 
+      Already have an account?
+ 
+      <a routerLink="/login">Login</a>
+ 
+    </div>
+ 
+  </div>
+ 
+</div>
+ 
+ 

@@ -1,0 +1,455 @@
+<!-- =========================
+
+     SIDEBAR
+
+========================= -->
+
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        <h2>💳 PayPilot</h2>
+
+        <p>Bill Service System</p>
+
+    </div>
+
+
+    <ul>
+
+
+        <li routerLink="/user-dashboard"
+
+            routerLinkActive="active">
+
+            <span>🏠</span>
+
+            Home
+
+        </li>
+
+
+        <li routerLink="/profile"
+
+            routerLinkActive="active">
+
+            <span>👤</span>
+
+            Profile
+
+        </li>
+
+
+        <li routerLink="/schedule-payments"
+
+            routerLinkActive="active">
+
+            <span>📅</span>
+
+            Schedule Payments
+
+        </li>
+
+
+        <li routerLink="/track-payments"
+
+            routerLinkActive="active">
+
+            <span>📍</span>
+
+            Track Payments
+
+        </li>
+
+
+        <li routerLink="/manage-bills"
+
+            routerLinkActive="active">
+
+            <span>🧾</span>
+
+            Manage Bills
+
+        </li>
+
+
+    </ul>
+
+
+    <button
+
+        class="logout-btn"
+
+        routerLink="/login">
+
+
+        🚪 Logout
+
+
+    </button>
+
+
+</div>
+
+
+<!-- =========================
+
+     MAIN CONTENT
+
+========================= -->
+
+
+<div class="main-content">
+
+
+    <!-- =========================
+
+         DASHBOARD BANNER
+
+    ========================= -->
+
+
+    <div class="dashboard-banner">
+
+
+        <div class="banner-left">
+
+
+            <h1>
+
+                📅 Schedule Payments
+
+            </h1>
+
+
+            <p>
+
+                Enable Auto Payment for your pending bills.
+
+                Bills with Auto Pay enabled will be paid
+
+                automatically on their due date.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="banner-right">
+
+
+            <div class="mini-card">
+
+
+                <h3>
+
+                    {{ totalBills }}
+
+                </h3>
+
+
+                <span>
+
+                    Total Bills
+
+                </span>
+
+
+            </div>
+
+
+            <div class="mini-card">
+
+
+                <h3>
+
+                    {{ autoPayEnabledCount }}
+
+                </h3>
+
+
+                <span>
+
+                    Auto Pay Enabled
+
+                </span>
+
+
+            </div>
+
+
+            <div class="mini-card">
+
+
+                <h3>
+
+                    {{ pendingBillsCount }}
+
+                </h3>
+
+
+                <span>
+
+                    Pending Bills
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+
+         EMPTY STATE
+
+    ========================= -->
+
+
+    <div
+
+        *ngIf="bills.length === 0"
+
+        class="empty-state">
+
+
+        <div class="empty-icon">
+
+            📭
+
+        </div>
+
+
+        <h3>
+
+            No Pending Bills Available
+
+        </h3>
+
+
+        <p>
+
+            All your bills are paid or
+
+            there are no pending bills available.
+
+        </p>
+
+
+    </div>
+
+
+    <!-- =========================
+
+         BILL CARDS
+
+    ========================= -->
+
+
+    <div
+
+        *ngIf="bills.length > 0"
+
+        class="bill-grid">
+
+
+        <div
+
+            class="bill-card"
+
+            *ngFor="let bill of bills">
+
+
+            <!-- Bill Header -->
+
+
+            <div class="bill-header">
+
+
+                <h3>
+
+                    {{ bill.billName }}
+
+                </h3>
+
+
+                <span class="status pending">
+
+                    {{ bill.billStatus }}
+
+                </span>
+
+
+            </div>
+
+
+            <!-- Bill Details -->
+
+
+            <div class="bill-details">
+
+
+                <div class="detail-row">
+
+
+                    <span class="label">
+
+                        Bill ID
+
+                    </span>
+
+
+                    <span>
+
+                        {{ bill.billId }}
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="detail-row">
+
+
+                    <span class="label">
+
+                        Category
+
+                    </span>
+
+
+                    <span>
+
+                        {{ bill.billCategory }}
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="detail-row">
+
+
+                    <span class="label">
+
+                        Amount
+
+                    </span>
+
+
+                    <span>
+
+                        ₹{{ bill.billAmount }}
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="detail-row">
+
+
+                    <span class="label">
+
+                        Due Date
+
+                    </span>
+
+
+                    <span>
+
+                        {{ bill.billDueDate }}
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="detail-row">
+
+
+                    <span class="label">
+
+                        Auto Pay
+
+                    </span>
+
+
+                    <span
+
+                        [class.enabled]="bill.shedulePayment"
+
+                        [class.disabled]="!bill.shedulePayment">
+
+
+                        {{ bill.shedulePayment ? 'Enabled' : 'Disabled' }}
+
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Buttons -->
+
+
+            <div class="button-group">
+
+
+                <button
+
+                    *ngIf="!bill.shedulePayment"
+
+                    class="enable-btn"
+
+                    (click)="enableAutoPay(bill.billId)">
+
+
+                    Enable Auto Pay
+
+
+                </button>
+
+
+                <button
+
+                    *ngIf="bill.shedulePayment"
+
+                    class="disable-btn"
+
+                    (click)="disableAutoPay(bill.billId)">
+
+
+                    Disable Auto Pay
+
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+ 

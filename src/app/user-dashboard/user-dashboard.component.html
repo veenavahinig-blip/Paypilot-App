@@ -1,0 +1,443 @@
+<div class="dashboard-container">
+
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+
+        <div class="logo">
+
+
+            <h2>💳 PayPilot</h2>
+
+
+            <p>Bill Service System</p>
+
+
+        </div>
+
+
+        <ul>
+
+
+            <li routerLink="/user-dashboard"
+
+                routerLinkActive="active">
+
+
+                <span>🏠</span> Home
+
+
+            </li>
+
+
+            <li routerLink="/profile"
+
+                routerLinkActive="active">
+
+
+                <span>👤</span> Profile
+
+
+            </li>
+
+
+            <li routerLink="/schedule-payments"
+
+                routerLinkActive="active">
+
+
+                <span>📅</span> Schedule Payments
+
+
+            </li>
+
+
+            <li routerLink="/track-payments"
+
+                routerLinkActive="active">
+
+
+                <span>📍</span> Track Payments
+
+
+            </li>
+
+
+            <li routerLink="/manage-bills"
+
+                routerLinkActive="active">
+
+
+                <span>🧾</span> Manage Bills
+
+
+            </li>
+
+
+        </ul>
+
+
+        <button
+
+            class="logout-btn"
+
+            (click)="logout()">
+
+
+            🚪 Logout
+
+
+        </button>
+
+
+    </div>
+
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+
+        <!-- Header -->
+
+        <div class="top-header">
+
+
+            <div class="welcome">
+
+
+                <h1>
+
+                    Welcome Back, {{userName}} 👋
+
+                </h1>
+
+
+                <p>
+
+                    Manage and track your bills easily.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="header-actions">
+
+
+
+                <!-- Notification Bell -->
+
+                <div
+
+                    class="notification"
+
+                    (click)="toggleNotifications()">
+
+
+                    🔔
+
+
+                    <span
+
+                        class="notification-count"
+
+                        *ngIf="unreadNotifications.length > 0">
+
+
+                        {{ unreadNotifications.length }}
+
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- Notification Popup -->
+
+                <div
+
+                    class="notification-popup"
+
+                    *ngIf="showNotificationPopup">
+
+
+                    <div class="popup-header">
+
+
+                        <h3>Notifications</h3>
+
+
+                        <button
+
+                            class="close-notification-btn"
+
+                            (click)="showNotificationPopup = false">
+
+
+                            ×
+
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div
+
+                        *ngIf="unreadNotifications.length === 0"
+
+                        class="empty-state">
+
+
+                        No New Notifications
+
+
+                    </div>
+
+
+                    <div
+
+                        class="notification-card"
+
+                        *ngFor="let notification of unreadNotifications">
+
+
+                        <div class="message">
+
+
+                            {{ notification.notificationMessage }}
+
+
+                        </div>
+
+
+                        <div class="date">
+
+
+                            {{ notification.createdDate | date:'dd/MM/yyyy hh:mm a' }}
+
+
+                        </div>
+
+
+                        <button
+
+                            class="read-btn"
+
+                            (click)="markAsRead(notification.notificationId)">
+
+
+                            Mark as Read
+
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Profile -->
+
+                <div
+
+                    class="profile-icon"
+
+                    (click)="openProfile()">
+
+
+                    👤
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Dashboard Cards -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+
+                <h3>Total Bills</h3>
+
+
+                <h2>{{totalBills}}</h2>
+
+
+            </div>
+
+
+            <div class="card">
+
+
+                <h3>Upcoming Bills</h3>
+
+
+                <h2>{{upcomingBills}}</h2>
+
+
+            </div>
+
+
+            <div class="card overdue">
+
+
+                <h3>Overdue Bills</h3>
+
+
+                <h2>{{overdueBills}}</h2>
+
+
+            </div>
+
+
+            <div class="card paid">
+
+
+                <h3>Paid Bills</h3>
+
+
+                <h2>{{paidBills}}</h2>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Recent Bills -->
+
+        <div class="table-section">
+
+
+            <h2>Recent Bills</h2>
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+
+                        <th>Bill Name</th>
+
+
+                        <th>Due Date</th>
+
+
+                        <th>Amount</th>
+
+
+                        <th>Status</th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr *ngFor="let bill of recentBills">
+
+
+                        <td>
+
+
+                            {{bill.billName}}
+
+
+                        </td>
+
+
+                        <td>
+
+
+                            {{bill.billDueDate}}
+
+
+                        </td>
+
+
+                        <td>
+
+
+                            ₹{{bill.billAmount}}
+
+
+                        </td>
+
+
+                        <td>
+
+
+    <span
+
+        *ngIf="bill.billStatus === 'PENDING'"
+
+        class="pending">
+
+
+        PENDING
+
+
+    </span>
+
+
+    <span
+
+        *ngIf="bill.billStatus === 'PAID'"
+
+        class="paid-text">
+
+
+        PAID
+
+
+    </span>
+
+
+</td>
+ 
+
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+ 

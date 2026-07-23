@@ -1,0 +1,1291 @@
+/* =====================================================
+
+   GLOBAL
+
+===================================================== */
+
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+body{
+
+    margin:0;
+
+    padding:0;
+
+    background:#f7fbff;
+
+    font-family:'Segoe UI',sans-serif;
+
+}
+
+
+/* =====================================================
+
+   SIDEBAR
+
+===================================================== */
+
+
+.sidebar{
+
+
+    width:270px;
+
+    height:100vh;
+
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+
+    background:linear-gradient(
+
+        180deg,
+
+        #8fd9ff 0%,
+
+        #65c8ff 30%,
+
+        #42b6ff 70%,
+
+        #2196f3 100%
+
+    );
+
+
+    color:white;
+
+
+    display:flex;
+
+    flex-direction:column;
+
+
+    box-shadow:8px 0 30px rgba(33,150,243,.20);
+
+
+    z-index:1000;
+
+}
+
+
+/* =====================================================
+
+   LOGO
+
+===================================================== */
+
+
+.logo{
+
+
+    text-align:center;
+
+
+    padding:30px 20px;
+
+
+    border-bottom:1px solid rgba(255,255,255,.20);
+
+}
+
+
+.logo h2{
+
+
+    margin:0;
+
+
+    color:white;
+
+
+    font-size:34px;
+
+
+    font-weight:700;
+
+}
+
+
+.logo p{
+
+
+    margin-top:8px;
+
+
+    color:rgba(255,255,255,.85);
+
+
+    font-size:13px;
+
+}
+
+
+/* =====================================================
+
+   MENU
+
+===================================================== */
+
+
+ul{
+
+
+    list-style:none;
+
+
+    padding:15px;
+
+
+    margin-top:20px;
+
+}
+
+
+li{
+
+
+    margin-bottom:12px;
+
+
+    padding:15px 18px;
+
+
+    border-radius:14px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:12px;
+
+
+    cursor:pointer;
+
+
+    font-size:15px;
+
+
+    font-weight:600;
+
+
+    transition:.3s;
+
+}
+
+
+li:hover{
+
+
+    transform:translateX(8px);
+
+
+    background:rgba(255,255,255,.18);
+
+}
+
+
+.active{
+
+
+    background:white;
+
+
+    color:#2196f3;
+
+
+    box-shadow:0 8px 20px rgba(255,255,255,.35);
+
+
+    font-weight:700;
+
+}
+
+
+/* =====================================================
+
+   LOGOUT BUTTON
+
+===================================================== */
+
+
+.logout-btn{
+
+
+    margin-top:auto;
+
+
+    margin-left:15px;
+
+    margin-right:15px;
+
+    margin-bottom:25px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    padding:15px;
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #ff7b54,
+
+        #ff5722
+
+    );
+
+
+    color:white;
+
+
+    font-size:15px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+.logout-btn:hover{
+
+
+    transform:translateY(-4px);
+
+
+    box-shadow:0 12px 25px rgba(255,87,34,.30);
+
+}
+
+
+/* =====================================================
+
+   MAIN CONTENT
+
+===================================================== */
+
+
+.main-content{
+
+
+    margin-left:270px;
+
+
+    min-height:100vh;
+
+
+    padding:30px;
+
+
+    background:linear-gradient(
+
+        180deg,
+
+        #f8fcff,
+
+        #eef8ff
+
+    );
+
+}
+
+
+/* =====================================================
+
+   TOP BANNER
+
+===================================================== */
+
+
+.top-banner {
+
+
+    margin-left: 300px;   /* increased */
+
+
+    margin-right: 20px;
+
+
+    margin-top: 20px;
+
+
+    background: linear-gradient(
+
+        135deg,
+
+        #ffffff,
+
+        #eef8ff,
+
+        #dff4ff
+
+    );
+
+
+    border-radius: 25px;
+
+
+    padding: 30px;
+
+
+    display: flex;
+
+
+    justify-content: space-between;
+
+
+    align-items: center;
+
+
+    border: 1px solid #d8efff;
+
+
+    box-shadow: 0 8px 25px rgba(51,153,255,.12);
+
+}
+ 
+
+
+.banner-left h2{
+
+
+    color:#1565c0;
+
+
+    font-size:36px;
+
+
+    font-weight:700;
+
+
+    margin-bottom:8px;
+
+}
+
+
+.banner-left p{
+
+
+    color:#64748b;
+
+
+    font-size:15px;
+
+}
+
+
+.banner-right{
+
+
+    display:flex;
+
+
+    gap:12px;
+
+
+    flex-wrap:wrap;
+
+}
+
+
+.tag{
+
+
+    background:#e3f2fd;
+
+
+    color:#1565c0;
+
+
+    border:1px solid #bbdefb;
+
+
+    padding:10px 16px;
+
+
+    border-radius:30px;
+
+
+    font-weight:600;
+
+
+    transition:.3s;
+
+}
+
+
+.tag:hover{
+
+
+    transform:translateY(-2px);
+
+
+    background:#d3ecff;
+
+}
+
+
+/* =====================================================
+
+   PAGE TITLE
+
+===================================================== */
+
+
+.page-title{
+
+
+    text-align:center;
+
+
+    color:#1565c0;
+
+
+    font-size:64px;
+
+
+    font-weight:700;
+
+
+    margin-bottom:60px;
+
+}
+
+
+/* =====================================================
+
+   BUTTON SECTION
+
+===================================================== */
+
+
+.bill-actions{
+
+
+    display:grid;
+
+
+    grid-template-columns:1fr 1fr;
+
+
+    gap:40px;
+
+
+    justify-items:center;
+
+}
+
+
+.bill-btn{
+
+
+    width:420px;
+
+
+    height:95px;
+
+
+    border:none;
+
+
+    border-radius:60px;
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #42a5f5,
+
+        #2196f3
+
+    );
+
+
+    color:white;
+
+
+    font-size:22px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.35s;
+
+
+    box-shadow:0 15px 30px rgba(33,150,243,.20);
+
+}
+
+
+.bill-btn:hover{
+
+
+    transform:translateY(-8px);
+
+
+    box-shadow:0 20px 40px rgba(33,150,243,.30);
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #64b5f6,
+
+        #2196f3
+
+    );
+
+}
+
+
+.bill-actions .bill-btn:nth-child(3){
+
+
+    grid-column:1/span 2;
+
+}
+
+
+/* =====================================================
+
+   MODAL OVERLAY
+
+===================================================== */
+
+
+.modal-overlay{
+
+
+    position:fixed;
+
+
+    inset:0;
+
+
+    background:rgba(0,0,0,.45);
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    z-index:9999;
+
+}
+
+
+/* =====================================================
+
+   COMMON MODAL
+
+===================================================== */
+
+
+.common-modal,
+
+.add-bill-modal{
+
+
+    background:white;
+
+
+    border-radius:25px;
+
+
+    padding:30px;
+
+
+    border:1px solid #d6ecff;
+
+
+    box-shadow:0 20px 50px rgba(33,150,243,.15);
+
+
+    max-height:90vh;
+
+
+    overflow-y:auto;
+
+}
+
+
+.common-modal{
+
+
+    width:1150px;
+
+
+    max-width:95vw;
+
+}
+
+
+.add-bill-modal{
+
+
+    width:750px;
+
+
+    max-width:95vw;
+
+}
+
+
+.common-modal h2,
+
+.add-bill-modal h2{
+
+
+    text-align:center;
+
+
+    color:#1565c0;
+
+
+    margin-bottom:25px;
+
+
+    font-size:32px;
+
+}
+
+
+/* =====================================================
+
+   FORM
+
+===================================================== */
+
+
+.form-group{
+
+
+    margin-bottom:18px;
+
+}
+
+
+.form-group label{
+
+
+    display:block;
+
+
+    margin-bottom:8px;
+
+
+    font-weight:600;
+
+
+    color:#1f2937;
+
+}
+
+
+.form-group input,
+
+.form-group select{
+
+
+    width:100%;
+
+
+    height:55px;
+
+
+    border:1px solid #cfeaff;
+
+
+    border-radius:12px;
+
+
+    padding:0 15px;
+
+
+    background:white;
+
+
+    outline:none;
+
+}
+
+
+.form-group input:focus,
+
+.form-group select:focus{
+
+
+    border-color:#42a5f5;
+
+
+    box-shadow:0 0 10px rgba(66,165,245,.20);
+
+}
+
+
+.save-btn{
+
+
+    width:100%;
+
+
+    height:55px;
+
+
+    border:none;
+
+
+    border-radius:12px;
+
+
+    font-weight:700;
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #42a5f5,
+
+        #2196f3
+
+    );
+
+
+    color:white;
+
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================================
+
+   TABLE
+
+===================================================== */
+
+
+.bill-table{
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+    overflow:hidden;
+
+
+    border-radius:18px;
+
+
+    background:white;
+
+}
+
+
+.bill-table th{
+
+
+    background:linear-gradient(
+
+        90deg,
+
+        #42a5f5,
+
+        #2196f3
+
+    );
+
+
+    color:white;
+
+
+    padding:18px;
+
+
+    font-size:15px;
+
+}
+
+
+.bill-table td{
+
+
+    padding:18px;
+
+
+    border-bottom:1px solid #edf2f7;
+
+
+    text-align:center;
+
+}
+
+
+.bill-table tbody tr:hover{
+
+
+    background:#edf8ff;
+
+
+    transition:.3s;
+
+}
+
+
+/* =====================================================
+
+   STATUS BADGES
+
+===================================================== */
+
+
+.pending-badge{
+
+
+    background:#fff3cd;
+
+
+    color:#ff9800;
+
+
+    border:1px solid #ffcc80;
+
+
+    padding:8px 14px;
+
+
+    border-radius:20px;
+
+
+    font-weight:600;
+
+}
+
+
+.paid-badge{
+
+
+    background:#e8f5e9;
+
+
+    color:#2e7d32;
+
+
+    border:1px solid #81c784;
+
+
+    padding:8px 14px;
+
+
+    border-radius:20px;
+
+
+    font-weight:600;
+
+}
+
+
+.snoozed-badge{
+
+
+    background:#e3f2fd;
+
+
+    color:#1565c0;
+
+
+    border:1px solid #90caf9;
+
+
+    padding:8px 14px;
+
+
+    border-radius:20px;
+
+
+    font-weight:600;
+
+}
+.close-btn {
+
+
+    position: absolute;
+
+
+    top: 15px;
+
+
+    right: 15px;
+
+
+    width: 40px;
+
+
+    height: 40px;
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    justify-content: center;
+
+
+    border-radius: 50%;
+
+
+    border: none;
+
+
+    background: #e3f2fd;
+
+
+    color: #1565c0;
+
+
+    font-size: 24px;
+
+
+    font-weight: 700;
+
+
+    cursor: pointer;
+
+
+    z-index: 1000;
+
+
+    transition: all .3s ease;
+
+}
+
+
+.close-btn:hover {
+
+
+    background: #2196f3;
+
+
+    color: white;
+
+
+    transform: rotate(90deg);
+
+
+    box-shadow: 0 8px 20px rgba(33,150,243,.25);
+
+}
+ 
+ 
+
+/* =====================================================
+
+   ACTION BUTTONS
+
+===================================================== */
+
+
+.action-buttons{
+
+
+    display:flex;
+
+
+    gap:10px;
+
+
+    justify-content:center;
+
+
+    flex-wrap:wrap;
+
+}
+
+
+.pay-btn,
+
+.paid-btn{
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #66bb6a,
+
+        #43a047
+
+    );
+
+
+    color:white;
+
+
+    border:none;
+
+
+    padding:10px 16px;
+
+
+    border-radius:10px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+.snooze-btn{
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #ffca28,
+
+        #ffa000
+
+    );
+
+
+    color:white;
+
+
+    border:none;
+
+
+    padding:10px 16px;
+
+
+    border-radius:10px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+}
+
+
+.unsnooze-btn{
+
+
+    background:linear-gradient(
+
+        135deg,
+
+        #42a5f5,
+
+        #2196f3
+
+    );
+
+
+    color:white;
+
+
+    border:none;
+
+
+    padding:10px 16px;
+
+
+    border-radius:10px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+}
+
+
+.pay-btn:hover,
+
+.paid-btn:hover,
+
+.unsnooze-btn:hover,
+
+.snooze-btn:hover{
+
+
+    transform:translateY(-3px);
+
+
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+
+}
+
+
+/* =====================================================
+
+   SCROLLBAR
+
+===================================================== */
+
+
+::-webkit-scrollbar{
+
+
+    width:8px;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+
+    background:#90caf9;
+
+
+    border-radius:10px;
+
+}
+
+
+/* =====================================================
+
+   MOBILE
+
+===================================================== */
+
+
+@media(max-width:900px){
+
+
+    .bill-actions{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .bill-actions .bill-btn:nth-child(3){
+
+        grid-column:auto;
+
+    }
+
+
+    .bill-btn{
+
+        width:100%;
+
+        max-width:420px;
+
+    }
+
+
+    .top-banner{
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+
+    .sidebar{
+
+        width:220px;
+
+    }
+
+
+    .main-content{
+
+        margin-left:220px;
+
+    }
+
+
+    .page-title{
+
+        font-size:42px;
+
+    }
+
+
+    .common-modal,
+
+    .add-bill-modal{
+
+        width:100%;
+
+        padding:20px;
+
+    }
+
+
+    .bill-table{
+
+        display:block;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+}
+ 

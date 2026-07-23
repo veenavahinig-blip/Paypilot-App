@@ -1,0 +1,776 @@
+/* =========================
+
+   SIDEBAR
+
+========================= */
+
+
+.sidebar {
+
+    width: 270px;
+
+    height: 100vh;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+
+    background: linear-gradient(
+
+        180deg,
+
+        #8fd9ff 0%,
+
+        #65c8ff 30%,
+
+        #42b6ff 70%,
+
+        #2196f3 100%
+
+    );
+
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+
+    box-shadow: 8px 0 30px rgba(33, 150, 243, 0.25);
+
+
+    z-index: 1000;
+
+}
+
+
+/* =========================
+
+   LOGO
+
+========================= */
+
+
+.logo {
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    border-bottom: 1px solid rgba(255,255,255,.25);
+
+}
+
+
+.logo h2 {
+
+    margin: 0;
+
+    font-size: 34px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+    letter-spacing: 1px;
+
+}
+
+
+.logo p {
+
+    margin-top: 8px;
+
+    color: rgba(255,255,255,.85);
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+
+   MENU
+
+========================= */
+
+
+ul {
+
+    list-style: none;
+
+    padding: 15px;
+
+    margin-top: 15px;
+
+}
+
+
+li {
+
+    margin-bottom: 12px;
+
+    padding: 16px 18px;
+
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+
+    transition: all .3s ease;
+
+}
+
+
+li:hover {
+
+    background: rgba(255,255,255,.22);
+
+    backdrop-filter: blur(10px);
+
+    transform: translateX(8px);
+
+}
+
+
+.active {
+
+    background: white;
+
+    color: #2196f3;
+
+    font-weight: 700;
+
+
+    box-shadow: 0 8px 20px rgba(255,255,255,0.35);
+
+}
+
+
+/* =========================
+
+   LOGOUT BUTTON
+
+========================= */
+
+
+.logout-btn {
+
+    margin-top: auto;
+
+    margin-left: 15px;
+
+    margin-right: 15px;
+
+    margin-bottom: 25px;
+
+
+    padding: 15px;
+
+
+    border: none;
+
+    border-radius: 14px;
+
+
+    background: linear-gradient(
+
+        90deg,
+
+        #ff7b54,
+
+        #ff5722
+
+    );
+
+
+    color: white;
+
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+
+    cursor: pointer;
+
+
+    transition: all .3s ease;
+
+}
+
+
+.logout-btn:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 25px rgba(255,87,34,.35);
+
+}
+
+/* ==========================================
+
+   MAIN CONTENT
+
+========================================== */
+
+
+.main-content{
+
+    margin-left:270px;
+
+    min-height:100vh;
+
+    padding:30px;
+
+    background:#f8fcff;
+
+}
+
+
+/* ==========================================
+
+   TOP DASHBOARD
+
+========================================== */
+
+
+.dashboard-banner{
+
+
+    background:rgb(179, 219, 247);
+
+
+    border-radius:20px;
+
+
+    padding:25px;
+
+
+    box-shadow:0 8px 20px rgba(33,150,243,.08);
+
+
+    border:1px solid #dbeafe;
+
+
+    margin-bottom:25px;
+
+}
+
+
+.banner-left h1{
+
+
+    color:#1565c0;
+
+
+    font-size:34px;
+
+
+    margin-bottom:8px;
+
+}
+
+
+.banner-left p{
+
+
+    color:#64748b;
+
+
+    margin-bottom:25px;
+
+}
+
+
+.banner-right{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+
+    gap:15px;
+
+}
+
+
+/* ==========================================
+
+   SUMMARY CARDS
+
+========================================== */
+
+
+.mini-card{
+
+
+    background:#d3ebfc;
+
+
+    border:1px solid #cbe1fd;
+
+
+    border-radius:16px;
+
+
+    text-align:center;
+
+
+    padding:20px;
+
+
+    transition:.3s;
+
+}
+
+
+.mini-card:hover{
+
+
+    transform:translateY(-4px);
+
+
+    box-shadow:0 10px 20px rgba(33,150,243,.10);
+
+}
+
+
+.mini-card h3{
+
+
+    margin:0;
+
+
+    font-size:28px;
+
+
+    color:#1565c0;
+
+}
+
+
+.mini-card span{
+
+
+    display:block;
+
+
+    margin-top:8px;
+
+
+    color:#64748b;
+
+
+    font-size:14px;
+
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================
+
+   EMPTY STATE
+
+========================================== */
+
+
+.empty-state{
+
+
+    background:white;
+
+
+    padding:40px;
+
+
+    text-align:center;
+
+
+    border-radius:18px;
+
+
+    border:1px solid #dbeafe;
+
+}
+
+
+/* ==========================================
+
+   BILL GRID
+
+========================================== */
+
+
+.bill-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(auto-fill,minmax(350px,1fr));
+
+
+    gap:20px;
+
+}
+
+
+/* ==========================================
+
+   BILL CARD
+
+========================================== */
+
+
+.bill-card{
+
+
+    background:rgb(223, 248, 255);
+
+
+    border-radius:20px;
+
+
+    padding:22px;
+
+
+    border:1px solid #dbeafe;
+
+
+    box-shadow:0 8px 20px rgba(33,150,243,.08);
+
+
+    transition:.3s;
+
+}
+
+
+.bill-card:hover{
+
+
+    transform:translateY(-4px);
+
+}
+
+
+/* ==========================================
+
+   HEADER
+
+========================================== */
+
+
+.bill-header{
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    margin-bottom:20px;
+
+}
+
+
+.bill-header h3{
+
+
+    margin:0;
+
+
+    color:#1565c0;
+
+
+    font-size:24px;
+
+}
+
+
+/* ==========================================
+
+   STATUS
+
+========================================== */
+
+
+.status{
+
+
+    padding:8px 16px;
+
+
+    border-radius:20px;
+
+
+    font-size:12px;
+
+
+    font-weight:700;
+
+}
+
+
+.pending{
+
+
+    background:#fff3cd;
+
+
+    color:#b7791f;
+
+}
+
+
+/* ==========================================
+
+   DETAILS
+
+========================================== */
+
+
+.bill-details{
+
+
+    margin-bottom:20px;
+
+}
+
+
+.detail-row{
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    padding:10px 0;
+
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+
+.detail-row:last-child{
+
+
+    border-bottom:none;
+
+}
+
+
+.label{
+
+
+    color:#64748b;
+
+
+    font-weight:600;
+
+}
+
+
+.enabled{
+
+
+    color:#16a34a;
+
+
+    font-weight:700;
+
+}
+
+
+.disabled{
+
+
+    color:#dc2626;
+
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+
+   BUTTONS
+
+========================================== */
+
+
+.button-group{
+
+
+    margin-top:15px;
+
+}
+
+
+.enable-btn{
+
+
+    width:100%;
+
+
+    padding:14px;
+
+
+    border:none;
+
+
+    border-radius:12px;
+
+
+    background:#2196f3;
+
+
+    color:white;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+.enable-btn:hover{
+
+
+    background:#1976d2;
+
+}
+
+
+.disable-btn{
+
+
+    width:100%;
+
+
+    padding:14px;
+
+
+    border:none;
+
+
+    border-radius:12px;
+
+
+    background:#ef5350;
+
+
+    color:white;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+.disable-btn:hover{
+
+
+    background:#e53935;
+
+}
+
+
+/* ==========================================
+
+   MOBILE
+
+========================================== */
+
+
+@media(max-width:992px){
+
+
+    .banner-right{
+
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+
+    .sidebar{
+
+        width:220px;
+
+    }
+
+
+    .main-content{
+
+        margin-left:220px;
+
+        padding:20px;
+
+    }
+
+
+    .bill-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .banner-left h1{
+
+        font-size:28px;
+
+    }
+
+}
+ 

@@ -1,0 +1,946 @@
+<!-- ================= SIDEBAR ================= -->
+
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        <h2>💳 PayPilot</h2>
+
+        <p>Bill Service System</p>
+
+    </div>
+
+
+    <ul>
+
+
+        <li routerLink="/user-dashboard">
+
+            🏠 Home
+
+        </li>
+
+
+        <li routerLink="/profile">
+
+            👤 Profile
+
+        </li>
+
+
+        <li routerLink="/schedule-payments">
+
+            📅 Schedule Payments
+
+        </li>
+
+
+        <li routerLink="/track-payments">
+
+            📍 Track Payments
+
+        </li>
+
+
+        <li class="active">
+
+            🧾 Manage Bills
+
+        </li>
+
+
+    
+
+
+    </ul>
+
+
+    <button class="logout-btn" routerLink="/login">
+
+        Logout
+
+    </button>
+
+
+</div>
+
+
+<!-- ================= TOP BANNER ================= -->
+
+
+<div class="top-banner">
+
+
+    <div class="banner-left">
+
+
+        <h2>💳 PayPilot Bill Service</h2>
+
+
+        <p>
+
+            Manage your bills securely, track due dates,
+
+            schedule reminders and never miss a payment.
+
+        </p>
+
+
+    </div>
+
+
+    <div class="banner-right">
+
+
+        <span class="tag">
+
+            🔒 Safe & Secure
+
+        </span>
+
+
+        <span class="tag">
+
+            ✅ 100% Trusted
+
+        </span>
+
+
+        <span class="tag">
+
+            ⚡ Fastest Service
+
+        </span>
+
+
+        <span class="tag">
+
+            📱 Easy Management
+
+        </span>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+
+<div class="main-content">
+
+
+    <h1 class="page-title">
+
+        Manage Bills
+
+    </h1>
+
+
+    <div class="bill-actions">
+
+
+        <button
+
+            class="bill-btn"
+
+            (click)="openPopup('ADD')">
+
+
+            ➕ Add New Bill
+
+
+        </button>
+
+
+        <button
+
+            class="bill-btn"
+
+            (click)="openPopup('OVERVIEW')">
+
+
+            💵 Bill Overview
+
+
+        </button>
+
+
+        <button
+
+            class="bill-btn"
+
+            (click)="openPopup('REMINDER')">
+
+
+            🔔 Reminder Settings
+
+
+        </button>
+
+
+        <button
+
+            class="bill-btn"
+
+            (click)="openPopup('UPCOMING')">
+
+
+            📅 Upcoming / Overdue Bills
+
+
+        </button>
+
+
+        <button
+
+            class="bill-btn"
+
+            (click)="openPopup('SNOOZE')">
+
+
+            ✅ Snooze / Mark Paid Bills
+
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= ADD BILL POPUP ================= -->
+
+
+<div
+
+    class="modal-overlay"
+
+    *ngIf="showModal && selectedAction === 'ADD'">
+
+
+    <div class="add-bill-modal">
+
+
+        <span
+
+            class="close-btn"
+
+            (click)="closePopup()">
+
+
+            ✖
+
+
+        </span>
+
+
+        <h2>Add New Bill</h2>
+
+
+        <div class="form-group">
+
+
+            <label>Bill Name</label>
+
+
+            <input
+
+                type="text"
+
+                [(ngModel)]="newBill.billName">
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label>Bill Category</label>
+
+
+            <select
+
+                [(ngModel)]="newBill.billCategory">
+
+
+                <option value="">
+
+                    Select Category
+
+                </option>
+
+
+                <option value="Electricity">
+
+                    Electricity
+
+                </option>
+
+
+                <option value="Water">
+
+                    Water
+
+                </option>
+
+
+                <option value="Internet">
+
+                    Internet
+
+                </option>
+
+
+                <option value="Phone">
+
+                    Phone
+
+                </option>
+
+
+                <option value="Insurance">
+
+                    Insurance
+
+                </option>
+
+
+                <option value="Rent">
+
+                    Rent
+
+                </option>
+
+
+            </select>
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label>Bill Amount (₹)</label>
+
+
+            <input
+
+                type="number"
+
+                [(ngModel)]="newBill.billAmount">
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label>Bill Due Date</label>
+
+
+            <input
+
+    type="date"
+
+    [(ngModel)]="newBill.billDueDate"
+
+    [min]="todayDate">
+ 
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label>Reminder Enabled</label>
+
+
+            <select
+
+                [(ngModel)]="newBill.reminderEnabled">
+
+
+                <option value="YES">
+
+                    YES
+
+                </option>
+
+
+                <option value="NO">
+
+                    NO
+
+                </option>
+
+
+            </select>
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label>Reminder Date</label>
+
+
+            <input
+
+    type="date"
+
+    [(ngModel)]="newBill.reminderDate"
+
+    [min]="todayDate"
+
+    [max]="newBill.billDueDate">
+ 
+
+
+        </div>
+
+
+        <button
+
+            class="save-btn"
+
+            (click)="addBill()">
+
+
+            Add Bill
+
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+<!-- BILL OVERVIEW -->
+
+
+<div
+
+class="modal-overlay"
+
+*ngIf="showModal && selectedAction==='OVERVIEW'">
+
+
+    <div class="common-modal">
+
+
+        <span
+
+        class="close-btn"
+
+        (click)="closePopup()">
+
+            ✖
+
+        </span>
+
+
+        <h2>Bill Overview</h2>
+
+
+        <table class="bill-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Bill Name</th>
+
+                    <th>Category</th>
+
+                    <th>Amount</th>
+
+                    <th>Due Date</th>
+
+                    <th>Status</th>
+
+                    <th>Transaction</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr *ngFor="let bill of bills">
+
+
+                    <td>{{bill.billName}}</td>
+
+                    <td>{{bill.billCategory}}</td>
+
+                    <td>₹ {{bill.billAmount}}</td>
+
+                    <td>{{bill.billDueDate}}</td>
+
+
+                    <td>
+
+
+    <span
+
+    class="pending-badge"
+
+    *ngIf="bill.billStatus==='PENDING'">
+
+
+        PENDING
+
+
+    </span>
+
+
+    <span
+
+    class="paid-badge"
+
+    *ngIf="bill.billStatus==='PAID'">
+
+
+        PAID
+
+
+    </span>
+
+
+    <span
+
+    class="snoozed-badge"
+
+    *ngIf="bill.billStatus==='SNOOZED'">
+
+
+        SNOOZED
+
+
+    </span>
+
+
+</td>
+ 
+
+
+                    <td>
+
+
+                        <button
+                        class="pay-btn"
+                        *ngIf="bill.billStatus==='PENDING'"
+                        >
+                        Not Completed
+                    </button>
+ 
+
+                        <button
+
+                        class="completed-btn"
+
+                        *ngIf="bill.billStatus==='PAID'">
+
+
+                            Completed
+
+
+                        </button>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+ 
+<div
+
+class="modal-overlay"
+
+*ngIf="showModal && selectedAction==='REMINDER'">
+
+
+    <div class="common-modal">
+
+
+        <span
+
+        class="close-btn"
+
+        (click)="closePopup()">
+
+
+            ✖
+
+
+        </span>
+
+
+        <h2>Reminder Settings</h2>
+
+
+        <table class="bill-table">
+
+
+            <thead>
+
+
+                <tr>
+
+
+                    <th>Bill</th>
+
+
+                    <th>Reminder Enabled</th>
+
+
+                    <th>Reminder Date</th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr
+
+                *ngFor="let bill of reminderBills()">
+
+
+                    <td>{{bill.billName}}</td>
+
+
+                    <td>
+
+
+    <span
+
+        class="reminder-yes"
+
+        *ngIf="bill.reminderEnabled==='YES'">
+
+
+        YES
+
+
+    </span>
+
+
+    <span
+
+        class="reminder-no"
+
+        *ngIf="bill.reminderEnabled==='NO'">
+
+
+        NO
+
+
+    </span>
+
+
+</td>
+ 
+
+
+                    <td>{{bill.reminderDate}}</td>
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+ 
+<div
+
+class="modal-overlay"
+
+*ngIf="showModal && selectedAction==='UPCOMING'">
+
+
+    <div class="common-modal">
+
+
+        <span
+
+        class="close-btn"
+
+        (click)="closePopup()">
+
+
+            ✖
+
+
+        </span>
+
+
+        <h2>Upcoming / Overdue Bills</h2>
+
+
+        <table class="bill-table">
+
+
+            <thead>
+
+
+                <tr>
+
+
+                    <th>Name</th>
+
+
+                    <th>Category</th>
+
+
+                    <th>Amount</th>
+
+
+                    <th>Due Date</th>
+
+
+                    <th>Status</th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr
+
+                *ngFor="let bill of pendingBills()">
+
+
+                    <td>{{bill.billName}}</td>
+
+
+                    <td>{{bill.billCategory}}</td>
+
+
+                    <td>₹ {{bill.billAmount}}</td>
+
+
+                    <td>{{bill.billDueDate}}</td>
+
+
+                    <td>
+
+
+                        <span class="pending-badge">
+
+
+                            PENDING
+
+
+                        </span>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+ 
+<div
+
+class="modal-overlay"
+
+*ngIf="showModal && selectedAction==='SNOOZE'">
+
+
+    <div class="common-modal">
+
+
+        <span
+
+        class="close-btn"
+
+        (click)="closePopup()">
+
+
+            ✖
+
+
+        </span>
+
+
+        <h2>Snooze / Mark Paid Bills</h2>
+
+
+        <table class="bill-table">
+
+
+            <thead>
+
+
+                <tr>
+
+
+                    <th>Bill</th>
+
+
+                    <th>Amount</th>
+
+
+                    <th>Due Date</th>
+
+
+                    <th>Actions</th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr
+
+                *ngFor="let bill of pendingBills()">
+
+
+                    <td>{{bill.billName}}</td>
+
+
+                    <td>₹ {{bill.billAmount}}</td>
+
+
+                    <td>{{bill.billDueDate}}</td>
+
+
+                    <td>
+
+
+    <div class="action-buttons">
+
+
+        <button
+
+            *ngIf="bill.billStatus !== 'SNOOZED'"
+
+            class="snooze-btn"
+
+            (click)="snoozeBill(bill.billId)">
+
+
+            Snooze
+
+
+        </button>
+
+
+        <button
+
+            *ngIf="bill.billStatus === 'SNOOZED'"
+
+            class="unsnooze-btn"
+
+            (click)="unSnoozeBill(bill.billId)">
+
+
+            Unsnooze
+
+
+        </button>
+
+
+        <button
+
+            class="paid-btn"
+
+            [disabled]="bill.billStatus === 'SNOOZED'"
+
+            (click)="payBill(bill)">
+
+
+            Pay Bill
+
+
+        </button>
+
+
+    </div>
+
+
+</td>
+ 
+ 
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+ 
+ 
