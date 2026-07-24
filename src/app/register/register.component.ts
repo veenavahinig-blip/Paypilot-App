@@ -128,6 +128,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       };
       console.log(data);
       alert("Registration Successful");
+      this.router.navigate(['/login'])
     }).catch((err) => {
       alert(err || 'reCAPTCHA verification failed');
     });

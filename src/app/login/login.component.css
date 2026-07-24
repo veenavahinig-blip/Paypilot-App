@@ -1,113 +1,537 @@
-body{
-    margin:0;
-    padding:0;
-    font-family:'Segoe UI',sans-serif;
+/* ==========================
+
+   FULL SCREEN BACKGROUND
+
+========================== */
+
+.login-page {
+
+  width: 100%;
+
+  height: 100vh;
+
+
+  background-image:
+
+    linear-gradient(
+
+      rgba(255,255,255,0.15),
+
+      rgba(255,255,255,0.15)
+
+    ),
+
+    url('/assets/background.png');
+
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+
+  padding-right: 8%;
+
 }
  
-.login-container{
-    display:flex;
-    height:100vh;
-    background:#f5f8ff;
+
+
+/* ==========================
+
+   PREMIUM GLASS CARD
+
+========================== */
+
+
+.login-card {
+
+  width: 100%;
+
+  max-width: 420px;
+
+
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+
+  border-radius: 28px;
+
+  padding: 35px;
+
+
+  background: rgba(255, 255, 255, 0.22);
+
+  backdrop-filter: blur(25px);
+
+  -webkit-backdrop-filter: blur(25px);
+
+
+  border: 1px solid rgba(255,255,255,0.4);
+
+
+  box-shadow:
+
+    0 25px 60px rgba(0,0,0,0.15),
+
+    0 8px 25px rgba(0,102,255,0.2);
+
+
+  /* Move card left */
+
+  margin-right: 250px;
+
+
+  animation: fadeIn 0.8s ease;
+
 }
  
-.left-panel{
-    width:50%;
-    padding:60px;
-    background:#eef4ff;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+
+
+/* Chrome Scrollbar */
+
+
+.login-card::-webkit-scrollbar {
+
+  width: 6px;
+
+}
+
+
+.login-card::-webkit-scrollbar-thumb {
+
+  background: #56b8ff;
+
+  border-radius: 50px;
+
+}
+
+
+/* ==========================
+
+   BRAND
+
+========================== */
+
+
+.brand-section {
+
+  text-align: center;
+
+  margin-bottom: 25px;
+
+}
+
+
+.brand-section h1 {
+
+  margin: 0;
+
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+
+  color: #0068ff;
+
+
+  letter-spacing: .5px;
+
+}
+
+
+.brand-section p {
+
+  margin-top: 6px;
+
+  color: #234d7c;
+
+  font-size: 14px;
+
+}
+
+
+/* ==========================
+
+   TITLE
+
+========================== */
+
+
+.card-content h2 {
+
+  margin: 0;
+
+
+  text-align: center;
+
+
+  color: #003d80;
+
+
+  font-weight: 700;
+
+}
+
+
+.subtitle {
+
+  display: block;
+
+
+  text-align: center;
+
+
+  margin-top: 10px;
+
+  margin-bottom: 25px;
+
+
+  color: #496887;
+
+
+  font-size: 14px;
+
+}
+
+.login-card {
+
+    background: rgba(255,255,255,0.22);
+
+
+    backdrop-filter: blur(25px);
+
+
+    border: 1px solid rgba(255,255,255,0.4);
+
+
+    box-shadow:
+
+        0 25px 60px rgba(0,0,0,0.15),
+
+        0 8px 25px rgba(0,102,255,0.2);
+
 }
  
-.logo h1{
-    color:#2563eb;
-    margin:0;
+
+/* ==========================
+
+   FORM
+
+========================== */
+
+
+.form-group {
+
+  margin-bottom: 18px;
+
 }
- 
-.logo span{
-    color:#2563eb;
-    font-size:20px;
+
+
+.form-group label {
+
+  display: block;
+
+
+  margin-bottom: 8px;
+
+
+  color: #003566;
+
+
+  font-size: 14px;
+
+
+  font-weight: 600;
+
 }
- 
-.left-panel h2{
-    color:#0f172a;
-    font-size:42px;
-    margin-top:30px;
+
+
+.form-group input {
+
+  width: 100%;
+
+
+  padding: 14px;
+
+
+  border-radius: 14px;
+
+
+  border: 1px solid rgba(0,129,255,0.20);
+
+
+  background: rgba(255,255,255,0.75);
+
+
+  font-size: 15px;
+
+
+  outline: none;
+
+
+  transition: all .3s ease;
+
 }
- 
-.left-panel p{
-    color:#64748b;
-    font-size:20px;
-    width:80%;
+
+
+.form-group input:focus {
+
+  border-color: #1f8fff;
+
+
+  box-shadow:
+
+    0 0 0 4px rgba(31,143,255,0.12);
+
 }
- 
-.left-panel img{
-    width:70%;
-    margin-top:20px;
+
+
+.form-group small {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color: #e53935;
+
+  font-size: 12px;
+
 }
- 
-.right-panel{
-    width:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:60px;
-    background:white;
+
+
+/* ==========================
+
+   FORGOT PASSWORD
+
+========================== */
+
+
+.forgot-section {
+
+  text-align: right;
+
+  margin-bottom: 20px;
+
 }
- 
-.right-panel h1{
-    text-align:center;
-    color:#0f172a;
+
+
+.forgot-section a {
+
+  color: #0078ff;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
 }
- 
-.right-panel p{
-    text-align:center;
-    color:#64748b;
+
+
+.forgot-section a:hover {
+
+  text-decoration: underline;
+
 }
- 
-.form-group{
-    margin-top:20px;
+
+
+/* ==========================
+
+   CAPTCHA
+
+========================== */
+
+
+.captcha-container {
+
+  margin-bottom: 20px;
+
+  display: flex;
+
+  justify-content: center;
+
 }
- 
-.form-group label{
-    display:block;
-    margin-bottom:8px;
+
+
+/* ==========================
+
+   BUTTON
+
+========================== */
+
+
+.login-btn {
+
+  width: 100%;
+
+
+  border: none;
+
+
+  padding: 15px;
+
+
+  border-radius: 16px;
+
+
+  cursor: pointer;
+
+
+  font-size: 16px;
+
+
+  font-weight: 700;
+
+
+  color: white;
+
+
+  background: linear-gradient(
+
+    135deg,
+
+    #0095ff,
+
+    #0066ff
+
+  );
+
+
+  transition: 0.3s ease;
+
 }
- 
-.form-group input{
-    width:100%;
-    padding:14px;
-    border:1px solid #d1d5db;
-    border-radius:10px;
+
+
+.login-btn:hover {
+
+  transform: translateY(-2px);
+
+
+  box-shadow:
+
+    0 10px 25px rgba(0,102,255,0.35);
+
 }
- 
-.eye-btn{
-    margin-top:10px;
-    border:none;
-    background:none;
-    color:blue;
-    cursor:pointer;
+
+
+/* ==========================
+
+   SIGNUP
+
+========================== */
+
+
+.signup-section {
+
+  margin-top: 25px;
+
+
+  text-align: center;
+
+
+  color: #37536f;
+
+
+  font-size: 14px;
+
 }
- 
-.forgot-password{
-    text-align:right;
-    margin-top:10px;
+
+
+.signup-section a {
+
+  margin-left: 4px;
+
+
+  color: #007bff;
+
+
+  font-weight: 700;
+
+
+  text-decoration: none;
+
 }
- 
-.login-btn{
-    width:100%;
-    margin-top:20px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:15px;
-    font-size:18px;
-    border-radius:10px;
-    cursor:pointer;
+
+
+.signup-section a:hover {
+
+  text-decoration: underline;
+
 }
- 
-.signup{
-    text-align:center;
-    margin-top:25px;
+
+
+/* ==========================
+
+   ANIMATION
+
+========================== */
+
+
+@keyframes fadeIn {
+
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+  }
+
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+
+}
+
+
+/* ==========================
+
+   RESPONSIVE
+
+========================== */
+
+
+@media (max-width: 768px) {
+
+
+  .login-card {
+
+
+    width: 100%;
+
+    max-width: 360px;
+
+
+    padding: 25px;
+
+
+    max-height: 90vh;
+
+
+  }
+
+
+  .brand-section h1 {
+
+    font-size: 34px;
+
+  }
+
+
 }
  
