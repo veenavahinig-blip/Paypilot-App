@@ -1,50 +1,277 @@
 package com.hcl.paypilot.repository;
- 
+
+
 import java.util.Optional;
- 
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Query;
- 
+
+
 import com.hcl.paypilot.entity.UserEntity;
- 
+
+
 /**
-* Repository interface for performing database operations on UserEntity.
+
+* ============================================================================
+
+* User Repository
+
+* ============================================================================
+
 *
-* This interface provides CRUD operations through JpaRepository and
-* custom methods for user-related queries such as email lookup and
-* sequence generation.
+
+* Repository interface responsible for performing database operations
+
+* related to user management within the PayPilot Application.
+
 *
-* @author PayPilot Team
+
+* This repository extends JpaRepository and provides:
+
+* - Standard CRUD Operations
+
+* - User Registration Support
+
+* - User Authentication Support
+
+* - Email Validation
+
+* - User Lookup Operations
+
+* - User ID Sequence Generation
+
+*
+
+* Entity:
+
+* UserEntity
+
+*
+
+* Primary Key:
+
+* String (userId)
+
+*
+
+* Features Supported:
+
+* - User Registration
+
+* - Login Authentication
+
+* - OTP Verification
+
+* - Forgot Password
+
+* - Password Reset
+
+* - Profile Management
+
+* - Dashboard Retrieval
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
+
 */
-public interface UserRepository extends JpaRepository<UserEntity, String> {
- 
+
+public interface UserRepository
+
+        extends JpaRepository<UserEntity, String> {
+
+
     /**
-     * Retrieves the next value from the database sequence used
-     * for generating unique user IDs.
+
+     * =========================================================================
+
+     * Get Next User Sequence Value
+
+     * =========================================================================
+
      *
-     * @return next sequence value
+
+     * Retrieves the next value from the Oracle database sequence
+
+     * used for generating unique user identifiers.
+
+     *
+
+     * Sequence Name:
+
+     * USER_SEQ
+
+     *
+
+     * Example:
+
+     * USER_SEQ.NEXTVAL = 1001
+
+     *
+
+     * Generated User ID:
+
+     * USER1001
+
+     *
+
+     * @return Next sequence value
+
      */
-    @Query(value = "SELECT user_seq.NEXTVAL FROM dual", nativeQuery = true)
+
+    @Query(
+
+            value = "SELECT user_seq.NEXTVAL FROM dual",
+
+            nativeQuery = true)
+
     Long getNextSequenceValue();
- 
+
+
     /**
-     * Finds a user by email address.
+
+     * =========================================================================
+
+     * Find User By Email
+
+     * =========================================================================
+
      *
-     * @param userEmail user's email address
+
+     * Retrieves a user based on the registered email address.
+
+     *
+
+     * Common Usage:
+
+     * - Login
+
+     * - Registration Validation
+
+     * - Forgot Password
+
+     * - OTP Verification
+
+     * - Profile Operations
+
+     *
+
+     * Example:
+
+     * user@gmail.com
+
+     *
+
+     * @param userEmail User Email Address
+
      * @return Optional containing UserEntity if found,
-     *         otherwise an empty Optional
+
+     *         otherwise Optional.empty()
+
      */
-    Optional<UserEntity> findByUserEmail(String userEmail);
-    
-    Optional<UserEntity> findByUserId(String userId);
- 
+
+    Optional<UserEntity> findByUserEmail(
+
+            String userEmail);
+
+
     /**
-     * Checks whether a user exists with the specified email address.
+
+     * =========================================================================
+
+     * Find User By User Id
+
+     * =========================================================================
+
      *
-     * @param userEmail user's email address
-     * @return true if user exists, otherwise false
+
+     * Retrieves a user using the unique user identifier.
+
+     *
+
+     * Example:
+
+     * USER1001
+
+     *
+
+     * Common Usage:
+
+     * - Dashboard Retrieval
+
+     * - Profile Management
+
+     * - User Validation
+
+     *
+
+     * @param userId User Identifier
+
+     * @return Optional containing UserEntity if found,
+
+     *         otherwise Optional.empty()
+
      */
-    boolean existsByUserEmail(String userEmail);
- 
+
+    Optional<UserEntity> findByUserId(
+
+            String userId);
+
+
+    /**
+
+     * =========================================================================
+
+     * Check User Existence By Email
+
+     * =========================================================================
+
+     *
+
+     * Verifies whether a user already exists
+
+     * with the specified email address.
+
+     *
+
+     * Common Usage:
+
+     * - Registration Validation
+
+     * - Duplicate Email Prevention
+
+     * - User Verification
+
+     *
+
+     * Example:
+
+     * user@gmail.com
+
+     *
+
+     * Returns:
+
+     * true  -> User exists
+
+     * false -> User does not exist
+
+     *
+
+     * @param userEmail User Email Address
+
+     * @return User existence status
+
+     */
+
+    boolean existsByUserEmail(
+
+            String userEmail);
+
+
 }
  

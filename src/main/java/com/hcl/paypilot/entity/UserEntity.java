@@ -1,396 +1,854 @@
 package com.hcl.paypilot.entity;
- 
-import jakarta.persistence.*;
- 
+
+
+import jakarta.persistence.Column;
+
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.Id;
+
+import jakarta.persistence.Table;
+
+
 /**
-* Entity class representing a user in the PayPilot application.
+
+* ============================================================================
+
+* User Entity
+
+* ============================================================================
+
 *
-* This class is mapped to the USERS_TAB table in Oracle Database.
-* It stores user registration details, login credentials,
-* bank information, OTP details, role information, and
-* verification status.
+
+* This entity represents user information within the PayPilot Application.
+
 *
-* @author PayPilotTeam
-* @version 1.0
+
+* It stores complete user account details including:
+
+* - Personal Information
+
+* - Login Credentials
+
+* - Bank Information
+
+* - PAN Details
+
+* - OTP Verification Details
+
+* - Role Information
+
+* - Account Verification Status
+
+* - Wallet / Account Balance
+
+*
+
+* Database Table:
+
+* USERS_TAB
+
+*
+
+* Features Supported:
+
+* - User Registration
+
+* - User Authentication
+
+* - OTP Verification
+
+* - Forgot Password
+
+* - Password Reset
+
+* - Profile Management
+
+* - Dashboard Management
+
+* - Banking Information Management
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
+
 */
+
 @Entity
+
 @Table(name = "users_tab")
+
 public class UserEntity {
- 
+
+
     /**
-     * Unique User ID.
-     * Example: USER1001
+
+     * Unique identifier of the user.
+
+     *
+
+     * Example:
+
+     * USER1001
+
      */
+
     @Id
+
     @Column(name = "user_id")
+
     private String userId;
- 
+
+
     /**
-     * Name of the user.
+
+     * Full name of the user.
+
      */
+
     @Column(name = "user_name")
+
     private String userName;
- 
+
+
     /**
-     * Email address of the user.
+
+     * Registered email address of the user.
+
+     *
+
+     * Used for:
+
+     * - Login
+
+     * - OTP Verification
+
+     * - Password Recovery
+
      */
+
     @Column(name = "user_email")
+
     private String userEmail;
- 
+
+
     /**
+
      * Encrypted password of the user.
+
+     *
+
+     * Used during authentication.
+
      */
+
     @Column(name = "password")
+
     private String password;
- 
+
+
     /**
+
      * PAN card details of the user.
+
+     *
+
+     * Example:
+
+     * ABCDE1234F
+
      */
+
     @Column(name = "pandetails")
+
     private String panDetails;
- 
+
+
     /**
-     * Bank account number of the user.
+
+     * User's bank account number.
+
      */
+
     @Column(name = "bankaccountnumber")
+
     private String bankAccountNumber;
- 
+
+
     /**
-     * IFSC code of the user's bank.
+
+     * IFSC code of the user's bank account.
+
+     *
+
+     * Example:
+
+     * SBIN0001234
+
      */
+
     @Column(name = "ifsccode")
+
     private String ifscCode;
- 
+
+
     /**
-     * Banking partner selected by user.
-     * Example: SBI, HDFC, ICICI, AXIS
+
+     * User's selected banking partner.
+
+     *
+
+     * Examples:
+
+     * - SBI
+
+     * - HDFC
+
+     * - ICICI
+
+     * - AXIS
+
+     * - PNB
+
      */
+
     @Column(name = "bankingpartner")
+
     private String bankingPartner;
- 
+
+
     /**
-     * User role.
-     * Example: USER, ADMIN
+
+     * User role within the application.
+
+     *
+
+     * Possible Values:
+
+     * - USER
+
+     * - ADMIN
+
      */
+
     @Column(name = "role")
+
     private String role;
- 
+
+
     /**
-     * One Time Password used for verification.
+
+     * One Time Password used for:
+
+     * - Account Verification
+
+     * - Password Reset
+
      */
+
     @Column(name = "otp")
+
     private String otp;
- 
+
+
     /**
-     * Indicates whether user account is verified.
-     * true  -> Verified
-     * false -> Not Verified
+
+     * Indicates whether the user account
+
+     * has been verified.
+
+     *
+
+     * true  = Verified
+
+     * false = Not Verified
+
      */
+
     @Column(name = "verified")
+
     private boolean verified;
- 
+
+
     /**
-     * User gender.
+
+     * User gender information.
+
      */
+
     @Column(name = "gender")
+
     private String gender;
+
+
     /**
 
-     * Current account balance available for the user.
+     * Current available account balance.
 
-     * This balance is used for bill payments and transactions.
+     *
+
+     * This balance can be used for:
+
+     * - Bill Payments
+
+     * - Scheduled Payments
+
+     * - Auto Payments
 
      */
 
     @Column(name = "balance")
 
     private Double balance;
- 
- 
+
+
     /**
+
      * Default Constructor.
+
      */
+
     public UserEntity() {
+
+
     }
- 
+
+
     /**
+
      * Parameterized Constructor.
+
      *
-     * @param userId              User ID
-     * @param userName            User Name
-     * @param userEmail           User Email
-     * @param password            User Password
-     * @param panDetails          PAN Details
-     * @param bankAccountNumber   Bank Account Number
-     * @param ifscCode            IFSC Code
-     * @param bankingPartner      Banking Partner
-     * @param role                User Role
-     * @param otp                 One Time Password
-     * @param verified            Verification Status
-     * @param gender              Gender
-     * @param balance             Balance
-     */
-    public UserEntity(String userId,
-                      String userName,
-                      String userEmail,
-                      String password,
-                      String panDetails,
-                      String bankAccountNumber,
-                      String ifscCode,
-                      String bankingPartner,
-                      String role,
-                      String otp,
-                      boolean verified,
-                      String gender,
-                      double balance) {
- 
-        super();
-        this.userId = userId;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.password = password;
-        this.panDetails = panDetails;
-        this.bankAccountNumber = bankAccountNumber;
-        this.ifscCode = ifscCode;
-        this.bankingPartner = bankingPartner;
-        this.role = role;
-        this.otp = otp;
-        this.verified = verified;
-        this.gender = gender;
-        this.balance = balance;
-    }
- 
-    /**
-     * Gets User ID.
-     *
-     * @return userId
-     */
-    public String getUserId() {
-        return userId;
-    }
- 
-    /**
-     * Sets User ID.
-     *
-     * @param userId User ID
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
- 
-    /**
-     * Gets User Email.
-     *
-     * @return userEmail
-     */
-    public String getUserEmail() {
-        return userEmail;
-    }
- 
-    /**
-     * Sets User Email.
-     *
-     * @param userEmail User Email
-     */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
- 
-    /**
-     * Gets Password.
-     *
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
- 
-    /**
-     * Sets Password.
-     *
-     * @param password User Password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
- 
-    /**
-     * Gets User Name.
-     *
-     * @return userName
-     */
-    public String getUserName() {
-        return userName;
-    }
- 
-    /**
-     * Sets User Name.
-     *
-     * @param userName User Name
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
- 
-    /**
-     * Gets PAN Details.
-     *
-     * @return panDetails
-     */
-    public String getPanDetails() {
-        return panDetails;
-    }
- 
-    /**
-     * Sets PAN Details.
-     *
-     * @param panDetails PAN Details
-     */
-    public void setPanDetails(String panDetails) {
-        this.panDetails = panDetails;
-    }
- 
-    /**
-     * Gets Bank Account Number.
-     *
-     * @return bankAccountNumber
-     */
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
- 
-    /**
-     * Sets Bank Account Number.
-     *
+
+     * @param userId            User Identifier
+
+     * @param userName          User Name
+
+     * @param userEmail         User Email
+
+     * @param password          Password
+
+     * @param panDetails        PAN Details
+
      * @param bankAccountNumber Bank Account Number
+
+     * @param ifscCode          IFSC Code
+
+     * @param bankingPartner    Banking Partner
+
+     * @param role              User Role
+
+     * @param otp               OTP
+
+     * @param verified          Verification Status
+
+     * @param gender            Gender
+
+     * @param balance           Account Balance
+
      */
-    public void setBankAccountNumber(String bankAccountNumber) {
+
+    public UserEntity(
+
+            String userId,
+
+            String userName,
+
+            String userEmail,
+
+            String password,
+
+            String panDetails,
+
+            String bankAccountNumber,
+
+            String ifscCode,
+
+            String bankingPartner,
+
+            String role,
+
+            String otp,
+
+            boolean verified,
+
+            String gender,
+
+            double balance) {
+
+
+        this.userId = userId;
+
+        this.userName = userName;
+
+        this.userEmail = userEmail;
+
+        this.password = password;
+
+        this.panDetails = panDetails;
+
         this.bankAccountNumber = bankAccountNumber;
-    }
- 
-    /**
-     * Gets IFSC Code.
-     *
-     * @return ifscCode
-     */
-    public String getIfscCode() {
-        return ifscCode;
-    }
- 
-    /**
-     * Sets IFSC Code.
-     *
-     * @param ifscCode IFSC Code
-     */
-    public void setIfscCode(String ifscCode) {
+
         this.ifscCode = ifscCode;
-    }
- 
-    /**
-     * Gets Banking Partner.
-     *
-     * @return bankingPartner
-     */
-    public String getBankingPartner() {
-        return bankingPartner;
-    }
- 
-    /**
-     * Sets Banking Partner.
-     *
-     * @param bankingPartner Banking Partner
-     */
-    public void setBankingPartner(String bankingPartner) {
+
         this.bankingPartner = bankingPartner;
-    }
- 
-    /**
-     * Gets User Role.
-     *
-     * @return role
-     */
-    public String getRole() {
-        return role;
-    }
- 
-    /**
-     * Sets User Role.
-     *
-     * @param role User Role
-     */
-    public void setRole(String role) {
+
         this.role = role;
-    }
- 
-    /**
-     * Gets OTP.
-     *
-     * @return otp
-     */
-    public String getOtp() {
-        return otp;
-    }
- 
-    /**
-     * Sets OTP.
-     *
-     * @param otp One Time Password
-     */
-    public void setOtp(String otp) {
+
         this.otp = otp;
-    }
- 
-    /**
-     * Checks whether user is verified.
-     *
-     * @return verification status
-     */
-    public boolean isVerified() {
-        return verified;
-    }
- 
-    /**
-     * Sets verification status.
-     *
-     * @param verified true or false
-     */
-    public void setVerified(boolean verified) {
+
         this.verified = verified;
-    }
- 
-    /**
-     * Gets Gender.
-     *
-     * @return gender
-     */
-    public String getGender() {
-        return gender;
-    }
- 
-    /**
-     * Sets Gender.
-     *
-     * @param gender User Gender
-     */
-    public void setGender(String gender) {
+
         this.gender = gender;
-    }
-    /**
-     * Gets current account balance.
-     *
-     * @return balance
-     */
-    public Double getBalance() {
-        return balance;
-    }
-    /**
-     * Sets current account balance.
-     *
-     * @param balance Account Balance
-     */
-    public void setBalance(Double balance) {
+
         this.balance = balance;
+
     }
- 
+
+
+    /**
+
+     * Retrieves user identifier.
+
+     *
+
+     * @return User ID
+
+     */
+
+    public String getUserId() {
+
+        return userId;
+
+    }
+
+
+    /**
+
+     * Sets user identifier.
+
+     *
+
+     * @param userId User ID
+
+     */
+
+    public void setUserId(String userId) {
+
+        this.userId = userId;
+
+    }
+
+
+    /**
+
+     * Retrieves user name.
+
+     *
+
+     * @return User Name
+
+     */
+
+    public String getUserName() {
+
+        return userName;
+
+    }
+
+
+    /**
+
+     * Sets user name.
+
+     *
+
+     * @param userName User Name
+
+     */
+
+    public void setUserName(String userName) {
+
+        this.userName = userName;
+
+    }
+
+
+    /**
+
+     * Retrieves user email address.
+
+     *
+
+     * @return User Email
+
+     */
+
+    public String getUserEmail() {
+
+        return userEmail;
+
+    }
+
+
+    /**
+
+     * Sets user email address.
+
+     *
+
+     * @param userEmail User Email
+
+     */
+
+    public void setUserEmail(String userEmail) {
+
+        this.userEmail = userEmail;
+
+    }
+
+
+    /**
+
+     * Retrieves password.
+
+     *
+
+     * @return Password
+
+     */
+
+    public String getPassword() {
+
+        return password;
+
+    }
+
+
+    /**
+
+     * Sets password.
+
+     *
+
+     * @param password Password
+
+     */
+
+    public void setPassword(String password) {
+
+        this.password = password;
+
+    }
+
+
+    /**
+
+     * Retrieves PAN details.
+
+     *
+
+     * @return PAN Details
+
+     */
+
+    public String getPanDetails() {
+
+        return panDetails;
+
+    }
+
+
+    /**
+
+     * Sets PAN details.
+
+     *
+
+     * @param panDetails PAN Details
+
+     */
+
+    public void setPanDetails(String panDetails) {
+
+        this.panDetails = panDetails;
+
+    }
+
+
+    /**
+
+     * Retrieves bank account number.
+
+     *
+
+     * @return Bank Account Number
+
+     */
+
+    public String getBankAccountNumber() {
+
+        return bankAccountNumber;
+
+    }
+
+
+    /**
+
+     * Sets bank account number.
+
+     *
+
+     * @param bankAccountNumber Bank Account Number
+
+     */
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+
+        this.bankAccountNumber = bankAccountNumber;
+
+    }
+
+
+    /**
+
+     * Retrieves IFSC code.
+
+     *
+
+     * @return IFSC Code
+
+     */
+
+    public String getIfscCode() {
+
+        return ifscCode;
+
+    }
+
+
+    /**
+
+     * Sets IFSC code.
+
+     *
+
+     * @param ifscCode IFSC Code
+
+     */
+
+    public void setIfscCode(String ifscCode) {
+
+        this.ifscCode = ifscCode;
+
+    }
+
+
+    /**
+
+     * Retrieves banking partner.
+
+     *
+
+     * @return Banking Partner
+
+     */
+
+    public String getBankingPartner() {
+
+        return bankingPartner;
+
+    }
+
+
+    /**
+
+     * Sets banking partner.
+
+     *
+
+     * @param bankingPartner Banking Partner
+
+     */
+
+    public void setBankingPartner(String bankingPartner) {
+
+        this.bankingPartner = bankingPartner;
+
+    }
+
+
+    /**
+
+     * Retrieves user role.
+
+     *
+
+     * @return Role
+
+     */
+
+    public String getRole() {
+
+        return role;
+
+    }
+
+
+    /**
+
+     * Sets user role.
+
+     *
+
+     * @param role User Role
+
+     */
+
+    public void setRole(String role) {
+
+        this.role = role;
+
+    }
+
+
+    /**
+
+     * Retrieves OTP.
+
+     *
+
+     * @return OTP
+
+     */
+
+    public String getOtp() {
+
+        return otp;
+
+    }
+
+
+    /**
+
+     * Sets OTP.
+
+     *
+
+     * @param otp One Time Password
+
+     */
+
+    public void setOtp(String otp) {
+
+        this.otp = otp;
+
+    }
+
+
+    /**
+
+     * Retrieves verification status.
+
+     *
+
+     * @return Verification Status
+
+     */
+
+    public boolean isVerified() {
+
+        return verified;
+
+    }
+
+
+    /**
+
+     * Updates verification status.
+
+     *
+
+     * @param verified Verification Status
+
+     */
+
+    public void setVerified(boolean verified) {
+
+        this.verified = verified;
+
+    }
+
+
+    /**
+
+     * Retrieves gender.
+
+     *
+
+     * @return Gender
+
+     */
+
+    public String getGender() {
+
+        return gender;
+
+    }
+
+
+    /**
+
+     * Sets gender.
+
+     *
+
+     * @param gender Gender
+
+     */
+
+    public void setGender(String gender) {
+
+        this.gender = gender;
+
+    }
+
+
+    /**
+
+     * Retrieves current account balance.
+
+     *
+
+     * @return Account Balance
+
+     */
+
+    public Double getBalance() {
+
+        return balance;
+
+    }
+
+
+    /**
+
+     * Updates account balance.
+
+     *
+
+     * @param balance Account Balance
+
+     */
+
+    public void setBalance(Double balance) {
+
+        this.balance = balance;
+
+    }
+
+
 }
  

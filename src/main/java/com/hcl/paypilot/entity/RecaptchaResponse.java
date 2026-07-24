@@ -9,27 +9,67 @@ import java.util.List;
 
 /**
 
-* Data Transfer Object (DTO) used to map the response received
+* ============================================================================
 
-* from the Google reCAPTCHA verification API.
+* reCAPTCHA Response DTO
 
-*
-
-* This class captures the validation result returned by Google,
-
-* including the verification status, challenge timestamp,
-
-* hostname, and any error codes generated during validation.
+* ============================================================================
 
 *
 
-* It is used to determine whether the CAPTCHA token submitted
+* This Data Transfer Object (DTO) represents the response returned
 
-* by the user is valid and can be trusted.
+* by Google's reCAPTCHA Verification API.
 
 *
 
-* @author PayPilot Team
+* The response is used to validate whether the CAPTCHA token
+
+* provided by the user is legitimate and successfully verified.
+
+*
+
+* This DTO captures:
+
+* - Verification Status
+
+* - Challenge Timestamp
+
+* - Hostname
+
+* - Error Codes
+
+*
+
+* Google Verification API Response Example:
+
+*
+
+* {
+
+*   "success": true,
+
+*   "challenge_ts": "2024-01-01T10:00:00Z",
+
+*   "hostname": "localhost",
+
+*   "error-codes": []
+
+* }
+
+*
+
+* This object is primarily used by:
+
+* - CaptchaService
+
+* - CaptchaServiceImpl
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
 
 */
 
@@ -38,9 +78,17 @@ public class RecaptchaResponse {
 
     /**
 
-     * Indicates whether the CAPTCHA verification
+     * Indicates whether CAPTCHA validation
 
      * was completed successfully.
+
+     *
+
+     * Value:
+
+     * true  = Valid CAPTCHA
+
+     * false = Invalid CAPTCHA
 
      */
 
@@ -49,15 +97,15 @@ public class RecaptchaResponse {
 
     /**
 
-     * Timestamp representing when the CAPTCHA challenge
+     * Timestamp indicating when the CAPTCHA challenge
 
-     * was successfully completed on the client side.
+     * was successfully solved on the client side.
 
      *
 
-     * The JSON property name from Google's response is
+     * Mapped from Google's JSON property:
 
-     * mapped using the @JsonProperty annotation.
+     * challenge_ts
 
      */
 
@@ -68,9 +116,17 @@ public class RecaptchaResponse {
 
     /**
 
-     * The hostname of the website where the CAPTCHA
+     * Hostname of the client application where
 
-     * challenge was solved.
+     * the CAPTCHA challenge was completed.
+
+     *
+
+     * Example:
+
+     * localhost
+
+     * paypilot.com
 
      */
 
@@ -79,25 +135,34 @@ public class RecaptchaResponse {
 
     /**
 
-     * List of error codes returned by Google if
+     * List of error codes returned by Google's
 
-     * CAPTCHA validation fails.
+     * reCAPTCHA verification API when validation fails.
+
+     *
+
+     * Example:
+
+     * [
+
+     *   "missing-input-secret",
+
+     *   "invalid-input-response"
+
+     * ]
 
      */
 
     private List<String> errorCodes;
 
 
-    // --- Getters and Setters ---
-
-
     /**
 
-     * Checks whether reCAPTCHA verification was successful.
+     * Retrieves CAPTCHA validation status.
 
      *
 
-     * @return true if verification succeeded,
+     * @return true if CAPTCHA verification succeeded,
 
      *         false otherwise
 
@@ -105,102 +170,114 @@ public class RecaptchaResponse {
 
     public boolean isSuccess() {
 
+
         return success;
+
 
     }
 
 
     /**
 
-     * Sets the CAPTCHA verification status.
+     * Sets CAPTCHA validation status.
 
      *
 
-     * @param success true if verification succeeded,
-
-     *                false otherwise
+     * @param success Verification status
 
      */
 
     public void setSuccess(boolean success) {
 
+
         this.success = success;
+
 
     }
 
 
     /**
 
-     * Retrieves the timestamp indicating when
-
-     * the CAPTCHA challenge was completed.
+     * Retrieves CAPTCHA challenge timestamp.
 
      *
 
-     * @return Challenge completion timestamp
+     * This timestamp represents when the user
+
+     * successfully completed the CAPTCHA challenge.
+
+     *
+
+     * @return Challenge Timestamp
 
      */
 
     public String getChallengeTs() {
 
+
         return challengeTs;
+
 
     }
 
 
     /**
 
-     * Sets the challenge completion timestamp.
+     * Sets CAPTCHA challenge timestamp.
 
      *
 
-     * @param challengeTs Timestamp returned
-
-     *                    by Google reCAPTCHA API
+     * @param challengeTs Challenge Timestamp
 
      */
 
     public void setChallengeTs(String challengeTs) {
 
+
         this.challengeTs = challengeTs;
+
 
     }
 
 
     /**
 
-     * Retrieves the hostname on which
+     * Retrieves hostname associated with the
 
-     * the CAPTCHA was solved.
+     * CAPTCHA verification request.
 
      *
 
-     * @return Hostname associated with the verification
+     * @return Hostname
 
      */
 
     public String getHostname() {
 
+
         return hostname;
+
 
     }
 
 
     /**
 
-     * Sets the hostname associated with
+     * Sets hostname associated with the
 
-     * the CAPTCHA verification.
+     * CAPTCHA verification request.
 
      *
 
-     * @param hostname Website hostname
+     * @param hostname Hostname
 
      */
 
     public void setHostname(String hostname) {
 
+
         this.hostname = hostname;
+
 
     }
 
@@ -209,36 +286,44 @@ public class RecaptchaResponse {
 
      * Retrieves the list of error codes returned
 
-     * when CAPTCHA verification fails.
+     * by Google's reCAPTCHA verification service.
 
      *
 
-     * @return List of error code strings
+     * Error codes are returned when validation fails.
+
+     *
+
+     * @return List of error codes
 
      */
 
     public List<String> getErrorCodes() {
 
+
         return errorCodes;
+
 
     }
 
 
     /**
 
-     * Sets the error codes returned by the
+     * Sets the list of error codes returned
 
-     * Google reCAPTCHA verification service.
+     * by Google's reCAPTCHA verification API.
 
      *
 
-     * @param errorCodes List of error code strings
+     * @param errorCodes List of error codes
 
      */
 
     public void setErrorCodes(List<String> errorCodes) {
 
+
         this.errorCodes = errorCodes;
+
 
     }
 

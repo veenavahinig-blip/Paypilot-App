@@ -11,9 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.paypilot.dto.UserDashboardDTO;
+
 import com.hcl.paypilot.entity.UserEntity;
 
 import com.hcl.paypilot.service.UserServiceImpl;
@@ -28,25 +33,56 @@ import com.hcl.paypilot.service.UserServiceImpl;
 
 /**
 
-* Controller class responsible for handling user-related operations
+* ============================================================================
 
-* such as registration, OTP verification, login, forgot password,
+* User Controller
 
-* and password reset functionalities.
-
-*
-
-* This controller acts as an intermediary between the client
-
-* application and the service layer by receiving HTTP requests,
-
-* processing input data, and returning appropriate responses.
+* ============================================================================
 
 *
 
-* @author PayPilot Team
+* This controller exposes REST APIs for user management within the
+
+* PayPilot Application.
+
+*
+
+* Features:
+
+* - User Registration
+
+* - OTP Verification
+
+* - User Login
+
+* - Forgot Password
+
+* - Forgot Password OTP Verification
+
+* - Password Reset
+
+* - OTP Verification and Password Reset
+
+* - Dashboard Retrieval
+
+* - User Profile Retrieval
+
+* - User Profile Update
+
+*
+
+* Base URL:
+
+* http://localhost:8086/users
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
 
 */
+
 
 @RestController
 
@@ -59,11 +95,11 @@ public class UserController {
 
     /**
 
-     * Service layer object used to perform user-related operations
+     * Service layer dependency responsible for handling
 
-     * including registration, authentication, OTP verification,
+     * user registration, authentication, profile management,
 
-     * and password management.
+     * OTP verification, dashboard operations, and password management.
 
      */
 
@@ -74,32 +110,92 @@ public class UserController {
 
     /**
 
-     * Registers a new user in the system and sends an OTP
+     * =========================================================================
 
-     * to the registered email address for verification.
+     * Register User
+
+     * =========================================================================
 
      *
 
-     * @param user User details received from request body
+     * Endpoint:
 
-     * @return ResponseEntity containing registration status message
+     * POST /users/register
+
+     *
+
+     * Registers a new user in the application.
+
+     * After successful registration, an OTP is sent
+
+     * to the user's registered email address for verification.
+
+     *
+
+     * Example:
+
+     * POST /users/register
+
+     *
+
+     * @param user User registration details
+
+     * @return Registration status message
 
      */
 
     @PostMapping("/register")
 
-    public ResponseEntity<String> createUser(@RequestBody UserEntity user) {
+    public ResponseEntity<String> createUser(
 
-        return ResponseEntity.ok(userService.registerUser(user));
+            @RequestBody UserEntity user) {
+
+
+        return ResponseEntity.ok(
+
+                userService.registerUser(user));
+
 
     }
 
 
     /**
 
+     * =========================================================================
+
+     * Verify Registration OTP
+
+     * =========================================================================
+
+     *
+
+     * Endpoint:
+
+     * POST /users/verify
+
+     *
+
      * Verifies the OTP entered by the user after registration.
 
-     * If the OTP matches, the user's account is activated.
+     * Upon successful verification, the user account is activated.
+
+     *
+
+     * Example:
+
+     * POST /users/verify
+
+     *
+
+     * Request Body:
+
+     * {
+
+     *   "userEmail":"user@gmail.com",
+
+     *   "otp":"123456"
+
+     * }
 
      *
 
@@ -111,26 +207,55 @@ public class UserController {
 
     @PostMapping("/verify")
 
-    public String verifyOtp(@RequestBody Map<String, String> data) {
+    public String verifyOtp(
+
+            @RequestBody Map<String, String> data) {
+
 
         String email = data.get("userEmail");
 
         String otp = data.get("otp");
 
+
         return userService.verify(email, otp);
+
 
     }
 
 
     /**
 
-     * Authenticates the user using email, password,
+     * =========================================================================
 
-     * and CAPTCHA token validation.
+     * User Login
+
+     * =========================================================================
 
      *
 
-     * @param data Contains email, password, and CAPTCHA token
+     * Endpoint:
+
+     * POST /users/login
+
+     *
+
+     * Authenticates a user using:
+
+     * - Email
+
+     * - Password
+
+     * - Google reCAPTCHA Token
+
+     *
+
+     * Example:
+
+     * POST /users/login
+
+     *
+
+     * @param data Contains email, password and captcha token
 
      * @return Login status message
 
@@ -138,7 +263,10 @@ public class UserController {
 
     @PostMapping("/login")
 
-    public String login(@RequestBody Map<String, String> data) {
+    public String login(
+
+            @RequestBody Map<String, String> data) {
+
 
         String email = data.get("email");
 
@@ -146,41 +274,92 @@ public class UserController {
 
         String captchaToken = data.get("captchaToken");
 
-        return userService.login(email, password, captchaToken);
+
+        return userService.login(
+
+                email,
+
+                password,
+
+                captchaToken);
+
 
     }
 
 
     /**
 
-     * Sends a password reset OTP to the registered
+     * =========================================================================
 
-     * email address of the user.
+     * Forgot Password
+
+     * =========================================================================
 
      *
 
-     * @param data Contains user's email address
+     * Endpoint:
 
-     * @return Status message indicating OTP sending result
+     * POST /users/forgotPassword
+
+     *
+
+     * Sends an OTP to the user's registered email address
+
+     * to initiate the password reset process.
+
+     *
+
+     * Example:
+
+     * POST /users/forgotPassword
+
+     *
+
+     * @param data Contains user email address
+
+     * @return Status message
 
      */
 
     @PostMapping("/forgotPassword")
 
-    public String forgotPassword(@RequestBody Map<String, String> data) {
+    public String forgotPassword(
+
+            @RequestBody Map<String, String> data) {
+
 
         String email = data.get("email");
 
+
         return userService.forgotPassword(email);
+
 
     }
 
 
     /**
 
-     * Verifies the OTP sent to the user's email during
+     * =========================================================================
 
-     * the forgot password process.
+     * Verify Forgot Password OTP
+
+     * =========================================================================
+
+     *
+
+     * Endpoint:
+
+     * POST /users/verify-forgot-otp
+
+     *
+
+     * Verifies the OTP sent during the forgot password process.
+
+     *
+
+     * Example:
+
+     * POST /users/verify-forgot-otp
 
      *
 
@@ -192,28 +371,55 @@ public class UserController {
 
     @PostMapping("/verify-forgot-otp")
 
-    public String verifyForgotOtp(@RequestBody Map<String, String> data) {
+    public String verifyForgotOtp(
+
+            @RequestBody Map<String, String> data) {
+
 
         String email = data.get("email");
 
         String otp = data.get("otp");
 
-        return userService.verifyForgotOtp(email, otp);
+
+        return userService.verifyForgotOtp(
+
+                email,
+
+                otp);
+
 
     }
 
 
     /**
 
-     * Resets the user's password after successful OTP verification.
+     * =========================================================================
 
-     * The new password and confirm password must match for
+     * Reset Password
 
-     * the password update to be successful.
+     * =========================================================================
 
      *
 
-     * @param data Contains email, new password, and confirm password
+     * Endpoint:
+
+     * POST /users/reset-password
+
+     *
+
+     * Resets the user's password after successful
+
+     * forgot password verification.
+
+     *
+
+     * Example:
+
+     * POST /users/reset-password
+
+     *
+
+     * @param data Contains email, new password and confirm password
 
      * @return Password reset status message
 
@@ -221,7 +427,10 @@ public class UserController {
 
     @PostMapping("/reset-password")
 
-    public String resetPassword(@RequestBody Map<String, String> data) {
+    public String resetPassword(
+
+            @RequestBody Map<String, String> data) {
+
 
         String email = data.get("email");
 
@@ -238,28 +447,41 @@ public class UserController {
 
                 confirmPassword);
 
+
     }
 
 
     /**
 
-     * Verifies the OTP provided by the user and resets
+     * =========================================================================
 
-     * the password in a single operation.
+     * Verify OTP And Reset Password
 
-     *
-
-     * This endpoint combines OTP verification and
-
-     * password reset functionality for convenience.
+     * =========================================================================
 
      *
 
-     * @param data Contains email, OTP, and new password
+     * Endpoint:
 
-     * @return Status message indicating whether OTP verification
+     * POST /users/verifyOtpAndResetPassword
 
-     *         and password reset were successful
+     *
+
+     * Verifies the OTP and resets the password
+
+     * in a single operation.
+
+     *
+
+     * Example:
+
+     * POST /users/verifyOtpAndResetPassword
+
+     *
+
+     * @param data Contains email, OTP and new password
+
+     * @return Verification and password reset status message
 
      */
 
@@ -285,8 +507,55 @@ public class UserController {
 
                 newPassword);
 
+
     }
 
+
+    /**
+
+     * =========================================================================
+
+     * User Dashboard
+
+     * =========================================================================
+
+     *
+
+     * Endpoint:
+
+     * GET /users/dashboard/{email}
+
+     *
+
+     * Retrieves dashboard summary data for a user.
+
+     *
+
+     * Dashboard information may include:
+
+     * - Total Bills
+
+     * - Paid Bills
+
+     * - Pending Bills
+
+     * - Upcoming Bills
+
+     * - Payment Statistics
+
+     *
+
+     * Example:
+
+     * GET /users/dashboard/user@gmail.com
+
+     *
+
+     * @param email User email address
+
+     * @return Dashboard details
+
+     */
 
     @GetMapping("/dashboard/{email}")
 
@@ -299,8 +568,40 @@ public class UserController {
 
 
     }
-     
-    
+
+
+    /**
+
+     * =========================================================================
+
+     * Get User Profile
+
+     * =========================================================================
+
+     *
+
+     * Endpoint:
+
+     * GET /users/profile/{email}
+
+     *
+
+     * Retrieves user profile details using email address.
+
+     *
+
+     * Example:
+
+     * GET /users/profile/user@gmail.com
+
+     *
+
+     * @param email User email address
+
+     * @return User profile information
+
+     */
+
     @GetMapping("/profile/{email}")
 
     public UserEntity getProfile(
@@ -310,8 +611,44 @@ public class UserController {
 
         return userService.getUserProfile(email);
 
+
     }
-     
+
+
+    /**
+
+     * =========================================================================
+
+     * Update User Profile
+
+     * =========================================================================
+
+     *
+
+     * Endpoint:
+
+     * PUT /users/profile/{email}
+
+     *
+
+     * Updates user profile details.
+
+     *
+
+     * Example:
+
+     * PUT /users/profile/user@gmail.com
+
+     *
+
+     * @param email User email address
+
+     * @param user Updated user profile details
+
+     * @return Updated user information
+
+     */
+
     @PutMapping("/profile/{email}")
 
     public UserEntity updateProfile(
@@ -323,16 +660,15 @@ public class UserController {
             @RequestBody UserEntity user) {
 
 
-        return userService
+        return userService.updateUserProfile(
 
-                .updateUserProfile(email, user);
+                email,
+
+                user);
+
 
     }
-     
-    
-    
 
-     
-     
+
 }
  

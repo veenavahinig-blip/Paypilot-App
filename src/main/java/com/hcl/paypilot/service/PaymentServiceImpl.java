@@ -22,35 +22,159 @@ import com.hcl.paypilot.repository.BillRepository;
 import com.hcl.paypilot.repository.PaymentRepository;
 
 
+/**
+
+* ============================================================================
+
+* Payment Service Implementation
+
+* ============================================================================
+
+*
+
+* This service implementation contains all business logic related to
+
+* payment processing within the PayPilot Application.
+
+*
+
+* Responsibilities:
+
+* - Bill Payment Processing
+
+* - Payment Transaction Creation
+
+* - Payment History Retrieval
+
+* - Paid Bills Retrieval
+
+* - Unpaid Bills Retrieval
+
+* - Bill Status Management
+
+*
+
+* This class acts as the bridge between:
+
+* Controller Layer and Repository Layer.
+
+*
+
+* Business Operations:
+
+* - Validate bill availability
+
+* - Prevent duplicate payments
+
+* - Record successful transactions
+
+* - Update bill payment status
+
+* - Disable reminders after payment
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
+
+*/
+
 @Service
 
 public class PaymentServiceImpl implements PaymentService {
 
+
+    /**
+
+     * Repository dependency used for performing
+
+     * payment transaction database operations.
+
+     */
 
     @Autowired
 
     private PaymentRepository paymentRepository;
 
 
+    /**
+
+     * Repository dependency used for performing
+
+     * bill-related database operations.
+
+     */
+
     @Autowired
 
     private BillRepository billRepository;
 
 
+    /**
+
+     * =========================================================================
+
+     * Pay Bill
+
+     * =========================================================================
+
+     *
+
+     * Processes payment for a specified bill.
+
+     *
+
+     * Business Flow:
+
+     * - Validate bill existence
+
+     * - Prevent duplicate payments
+
+     * - Create payment transaction
+
+     * - Mark bill as PAID
+
+     * - Disable reminders
+
+     * - Remove reminder date
+
+     *
+
+     * Payment Status:
+
+     * SUCCESS
+
+     *
+
+     * @param userId User Identifier
+
+     * @param billId Bill Identifier
+
+     * @return Payment status message
+
+     */
+
     @Override
 
-    public String payBill(String userId, Long billId) {
+    public String payBill(
+
+            String userId,
+
+            Long billId) {
 
 
-        BillEntity bill = billRepository.findById(billId)
+        BillEntity bill =
 
-                .orElseThrow(() ->
+                billRepository.findById(billId)
 
-                        new RuntimeException(
+                        .orElseThrow(() ->
 
-                                "Bill not found with Id : "
+                                new RuntimeException(
 
-                                        + billId));
+                                        "Bill not found with Id : "
+
+                                                + billId));
 
 
         if ("PAID".equalsIgnoreCase(
@@ -114,11 +238,40 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
+    /**
+
+     * =========================================================================
+
+     * Get Paid Bills
+
+     * =========================================================================
+
+     *
+
+     * Retrieves all bills that have been paid
+
+     * by the specified user.
+
+     *
+
+     * A bill is considered paid when:
+
+     * Bill Status = PAID
+
+     *
+
+     * @param userId User Identifier
+
+     * @return List of paid bills
+
+     */
+
     @Override
 
     public List<BillEntity> getPaidBills(
 
             String userId) {
+
 
         List<BillEntity> bills =
 
@@ -141,6 +294,44 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+
+    /**
+
+     * =========================================================================
+
+     * Get Unpaid Bills
+
+     * =========================================================================
+
+     *
+
+     * Retrieves all unpaid bills belonging
+
+     * to the specified user.
+
+     *
+
+     * Includes statuses such as:
+
+     * - PENDING
+
+     * - OVERDUE
+
+     * - SNOOZED
+
+     *
+
+     * Excludes:
+
+     * - PAID
+
+     *
+
+     * @param userId User Identifier
+
+     * @return List of unpaid bills
+
+     */
 
     @Override
 
@@ -170,6 +361,54 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+
+    /**
+
+     * =========================================================================
+
+     * Get Payment History
+
+     * =========================================================================
+
+     *
+
+     * Retrieves complete payment transaction history
+
+     * for the specified user.
+
+     *
+
+     * Transaction Information Includes:
+
+     * - Payment Identifier
+
+     * - Bill Identifier
+
+     * - Payment Amount
+
+     * - Payment Date & Time
+
+     * - Payment Status
+
+     * - Payment Message
+
+     *
+
+     * Common Usage:
+
+     * - Payment History Screen
+
+     * - Dashboard Reporting
+
+     * - Transaction Auditing
+
+     *
+
+     * @param userId User Identifier
+
+     * @return List of payment transactions
+
+     */
 
     @Override
 

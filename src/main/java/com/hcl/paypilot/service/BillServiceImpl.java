@@ -1,320 +1,749 @@
 package com.hcl.paypilot.service;
 
+
 import java.time.LocalDate;
 
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+
 import com.hcl.paypilot.entity.BillEntity;
 
 import com.hcl.paypilot.repository.BillRepository;
 
+
+/**
+
+* ============================================================================
+
+* Bill Service Implementation
+
+* ============================================================================
+
+*
+
+* This service implementation contains all business logic related to
+
+* bill management within the PayPilot Application.
+
+*
+
+* Responsibilities:
+
+* - Add Bills
+
+* - Update Bills
+
+* - Delete Bills
+
+* - Set Bill Reminders
+
+* - Snooze Bills
+
+* - Unsnooze Bills
+
+* - Retrieve User Bills
+
+* - Retrieve Bill Details
+
+* - Retrieve Pending Bills
+
+* - Enable Scheduled Payments
+
+* - Disable Scheduled Payments
+
+* - Process Automatic Bill Payments
+
+*
+
+* This class acts as the bridge between:
+
+* Controller Layer and Repository Layer.
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
+
+*/
+
 @Service
+
 public class BillServiceImpl implements BillService {
 
-	@Autowired
-	private BillRepository billRepository;
 
-	@Override
-	public String addBill(BillEntity bill) {
-		billRepository.save(bill);
-		return "Bill added successfully";
+    /**
 
-	}
+     * Repository dependency used for performing
 
-	@Override
-	public String updateBill(Long billId, BillEntity bill) {
+     * database operations related to bills.
 
-		BillEntity existingBill = billRepository.findById(billId)
+     */
 
-				.orElseThrow(() -> new RuntimeException("Bill not found with ID : " + billId));
+    @Autowired
 
-		existingBill.setUserId(bill.getUserId());
-		existingBill.setBillName(bill.getBillName());
-		existingBill.setBillCategory(bill.getBillCategory());
-		existingBill.setBillAmount(bill.getBillAmount());
-		existingBill.setBillDueDate(bill.getBillDueDate());
-		existingBill.setReminderEnabled(bill.getReminderEnabled());
-		existingBill.setReminderDate(bill.getReminderDate());
-		existingBill.setBillStatus(bill.getBillStatus());
-		existingBill.setSnoozeDate(bill.getSnoozeDate());
+    private BillRepository billRepository;
 
-		billRepository.save(existingBill);
 
-		return "Bill updated successfully";
+    /**
 
-	}
+     * =========================================================================
 
-	@Override
-	public String deleteBill(Long billId) {
-		BillEntity bill = billRepository.findById(billId)
+     * Add Bill
 
-				.orElseThrow(() -> new RuntimeException("Bill not found with ID : " + billId));
+     * =========================================================================
 
-		billRepository.delete(bill);
+     *
 
-		return "Bill deleted successfully";
+     * Saves a new bill into the system.
 
-	}
+     *
 
-	@Override
+     * @param bill Bill details
 
-	public String setReminder(Long billId) {
+     * @return Success message
 
-		BillEntity bill = billRepository.findById(billId)
+     */
 
-				.orElseThrow(() -> new RuntimeException("Bill not found with ID : " + billId));
+    @Override
 
-		bill.setReminderEnabled("YES");
+    public String addBill(BillEntity bill) {
 
-		if (bill.getBillDueDate() != null) {
 
-			bill.setReminderDate(bill.getBillDueDate().minusDays(3));
+        billRepository.save(bill);
 
-		}
 
-		billRepository.save(bill);
+        return "Bill added successfully";
 
-		return "Reminder set successfully";
+    }
 
-	}
 
-	@Override
+    /**
 
-	public String snoozeBill(Long billId) {
+     * =========================================================================
 
+     * Update Bill
 
-	    BillEntity bill = billRepository.findById(billId)
+     * =========================================================================
 
-	            .orElseThrow(() ->
+     *
 
-	                    new RuntimeException(
+     * Updates an existing bill using the provided bill identifier.
 
-	                            "Bill not found with ID : "
+     *
 
-	                                    + billId));
+     * @param billId Bill Identifier
 
+     * @param bill Updated bill details
 
-	    // Store current reminder status
+     * @return Success message
 
-	    bill.setPreviousReminderStatus(
+     */
 
-	            bill.getReminderEnabled());
+    @Override
 
+    public String updateBill(
 
-	    // Update bill details
+            Long billId,
 
-	    bill.setBillStatus("SNOOZED");
+            BillEntity bill) {
 
 
-	    bill.setSnoozeDate(
+        BillEntity existingBill =
 
-	            LocalDate.now().plusDays(3));
+                billRepository.findById(billId)
 
+                        .orElseThrow(() ->
 
-	    // Disable reminder
+                                new RuntimeException(
 
-	    bill.setReminderEnabled("NO");
+                                        "Bill not found with ID : "
 
+                                                + billId));
 
-	    billRepository.save(bill);
 
+        existingBill.setUserId(bill.getUserId());
 
-	    return "Bill Snoozed Successfully";
+        existingBill.setBillName(bill.getBillName());
 
-	}
-	 
-	 
-	
-	@Override
+        existingBill.setBillCategory(bill.getBillCategory());
 
-	public String unSnoozeBill(Long billId) {
+        existingBill.setBillAmount(bill.getBillAmount());
 
+        existingBill.setBillDueDate(bill.getBillDueDate());
 
-	    BillEntity bill = billRepository.findById(billId)
+        existingBill.setReminderEnabled(bill.getReminderEnabled());
 
-	            .orElseThrow(() ->
+        existingBill.setReminderDate(bill.getReminderDate());
 
-	                    new RuntimeException(
+        existingBill.setBillStatus(bill.getBillStatus());
 
-	                            "Bill not found with ID : "
+        existingBill.setSnoozeDate(bill.getSnoozeDate());
 
-	                                    + billId));
 
+        billRepository.save(existingBill);
 
-	    // Back to pending
 
-	    bill.setBillStatus("PENDING");
+        return "Bill updated successfully";
 
+    }
 
-	    // Remove snooze date
 
-	    bill.setSnoozeDate(null);
+    /**
 
+     * =========================================================================
 
-	    // Restore previous reminder value
+     * Delete Bill
 
-	    if (bill.getPreviousReminderStatus() != null) {
+     * =========================================================================
 
+     *
 
-	        bill.setReminderEnabled(
+     * Removes a bill from the system.
 
-	                bill.getPreviousReminderStatus());
+     *
 
+     * @param billId Bill Identifier
 
-	    } else {
+     * @return Success message
 
+     */
 
-	        bill.setReminderEnabled("YES");
+    @Override
 
+    public String deleteBill(Long billId) {
 
-	    }
 
+        BillEntity bill =
 
-	    billRepository.save(bill);
+                billRepository.findById(billId)
 
+                        .orElseThrow(() ->
 
-	    return "Bill Unsnoozed Successfully";
+                                new RuntimeException(
 
-	}
-	 
-	 
+                                        "Bill not found with ID : "
 
-	@Override
+                                                + billId));
 
-	public List<BillEntity> getUserBills(String userId) {
 
-		return billRepository.findByUserId(String.valueOf(userId));
+        billRepository.delete(bill);
 
-	}
 
-	@Override
+        return "Bill deleted successfully";
 
-	public BillEntity getBillById(Long billId) {
+    }
 
-		return billRepository.findById(billId)
 
-				.orElseThrow(() -> new RuntimeException("Bill not found with ID : " + billId));
+    /**
 
-	}
-	
-	@Override
+     * =========================================================================
 
-	public List<BillEntity> getPendingBills(
+     * Set Reminder
 
-	        String userId) {
+     * =========================================================================
 
+     *
 
-	    return billRepository
+     * Enables reminder functionality for a bill.
 
-	            .findByUserIdAndBillStatus(
+     *
 
-	                    userId,
+     * Reminder date is automatically calculated
 
-	                    "PENDING");
+     * as 3 days before the due date.
 
-	}
-	
-	@Override
+     *
 
-	public String enableSchedulePayment(
+     * @param billId Bill Identifier
 
-	        Long billId) {
+     * @return Success message
 
+     */
 
-	    BillEntity bill =
+    @Override
 
-	            billRepository.findById(billId)
+    public String setReminder(Long billId) {
 
-	                    .orElseThrow(() ->
 
-	                            new RuntimeException(
+        BillEntity bill =
 
-	                                    "Bill not found"));
+                billRepository.findById(billId)
 
+                        .orElseThrow(() ->
 
-	    bill.setShedulePayment(true);
+                                new RuntimeException(
 
+                                        "Bill not found with ID : "
 
-	    billRepository.save(bill);
+                                                + billId));
 
 
-	    return "Schedule Payment Enabled";
+        bill.setReminderEnabled("YES");
 
-	}
-	
-	@Override
 
-	public String autoPayBills() {
+        if (bill.getBillDueDate() != null) {
 
 
-	    List<BillEntity> bills =
+            bill.setReminderDate(
 
-	            billRepository
+                    bill.getBillDueDate().minusDays(3));
 
-	                    .findByBillStatusAndShedulePayment(
+        }
 
-	                            "PENDING",
 
-	                            true);
+        billRepository.save(bill);
 
 
-	    LocalDate today =
+        return "Reminder set successfully";
 
-	            LocalDate.now();
+    }
 
 
-	    for (BillEntity bill : bills) {
+    /**
 
+     * =========================================================================
 
-	        if (bill.getBillDueDate() != null
+     * Snooze Bill
 
-	                && bill.getBillDueDate()
+     * =========================================================================
 
-	                        .equals(today)) {
+     *
 
+     * Temporarily postpones the bill.
 
-	            bill.setBillStatus("PAID");
+     *
 
+     * Actions Performed:
 
-	            billRepository.save(bill);
+     * - Stores current reminder status
 
-	        }
+     * - Sets bill status to SNOOZED
 
-	    }
+     * - Sets snooze date to current date + 3 days
 
+     * - Disables reminders
 
-	    return "Auto Payment Process Completed";
+     *
 
-	}
-	
-	@Override
+     * @param billId Bill Identifier
 
-	public String disableSchedulePayment(Long billId) {
+     * @return Success message
 
+     */
 
-	    BillEntity bill = billRepository.findById(billId)
+    @Override
 
-	            .orElseThrow(() ->
+    public String snoozeBill(Long billId) {
 
-	                    new RuntimeException("Bill not found"));
 
+        BillEntity bill =
 
-	    bill.setShedulePayment(false);
+                billRepository.findById(billId)
 
+                        .orElseThrow(() ->
 
-	    billRepository.save(bill);
+                                new RuntimeException(
 
+                                        "Bill not found with ID : "
 
-	    return "Auto Payment Disabled Successfully";
+                                                + billId));
 
-	}
-	 
-	 
-	 
-	 
+
+        bill.setPreviousReminderStatus(
+
+                bill.getReminderEnabled());
+
+
+        bill.setBillStatus("SNOOZED");
+
+
+        bill.setSnoozeDate(
+
+                LocalDate.now().plusDays(3));
+
+
+        bill.setReminderEnabled("NO");
+
+
+        billRepository.save(bill);
+
+
+        return "Bill Snoozed Successfully";
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Unsnooze Bill
+
+     * =========================================================================
+
+     *
+
+     * Restores a snoozed bill back to active state.
+
+     *
+
+     * Actions Performed:
+
+     * - Status changed to PENDING
+
+     * - Snooze date removed
+
+     * - Previous reminder setting restored
+
+     *
+
+     * @param billId Bill Identifier
+
+     * @return Success message
+
+     */
+
+    @Override
+
+    public String unSnoozeBill(Long billId) {
+
+
+        BillEntity bill =
+
+                billRepository.findById(billId)
+
+                        .orElseThrow(() ->
+
+                                new RuntimeException(
+
+                                        "Bill not found with ID : "
+
+                                                + billId));
+
+
+        bill.setBillStatus("PENDING");
+
+
+        bill.setSnoozeDate(null);
+
+
+        if (bill.getPreviousReminderStatus() != null) {
+
+
+            bill.setReminderEnabled(
+
+                    bill.getPreviousReminderStatus());
+
+
+        } else {
+
+
+            bill.setReminderEnabled("YES");
+
+        }
+
+
+        billRepository.save(bill);
+
+
+        return "Bill Unsnoozed Successfully";
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Get User Bills
+
+     * =========================================================================
+
+     *
+
+     * Retrieves all bills belonging to a user.
+
+     *
+
+     * @param userId User Identifier
+
+     * @return List of Bills
+
+     */
+
+    @Override
+
+    public List<BillEntity> getUserBills(String userId) {
+
+
+        return billRepository.findByUserId(
+
+                String.valueOf(userId));
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Get Bill By Id
+
+     * =========================================================================
+
+     *
+
+     * Retrieves bill details using bill identifier.
+
+     *
+
+     * @param billId Bill Identifier
+
+     * @return Bill Details
+
+     */
+
+    @Override
+
+    public BillEntity getBillById(Long billId) {
+
+
+        return billRepository.findById(billId)
+
+                .orElseThrow(() ->
+
+                        new RuntimeException(
+
+                                "Bill not found with ID : "
+
+                                        + billId));
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Get Pending Bills
+
+     * =========================================================================
+
+     *
+
+     * Retrieves all pending bills for a user.
+
+     *
+
+     * @param userId User Identifier
+
+     * @return List of Pending Bills
+
+     */
+
+    @Override
+
+    public List<BillEntity> getPendingBills(
+
+            String userId) {
+
+
+        return billRepository
+
+                .findByUserIdAndBillStatus(
+
+                        userId,
+
+                        "PENDING");
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Enable Scheduled Payment
+
+     * =========================================================================
+
+     *
+
+     * Enables automatic payment functionality
+
+     * for the specified bill.
+
+     *
+
+     * @param billId Bill Identifier
+
+     * @return Success message
+
+     */
+
+    @Override
+
+    public String enableSchedulePayment(
+
+            Long billId) {
+
+
+        BillEntity bill =
+
+                billRepository.findById(billId)
+
+                        .orElseThrow(() ->
+
+                                new RuntimeException(
+
+                                        "Bill not found"));
+
+
+        bill.setShedulePayment(true);
+
+
+        billRepository.save(bill);
+
+
+        return "Schedule Payment Enabled";
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Auto Pay Bills
+
+     * =========================================================================
+
+     *
+
+     * Processes all eligible bills for automatic payment.
+
+     *
+
+     * Eligibility Criteria:
+
+     * - Bill Status = PENDING
+
+     * - Scheduled Payment Enabled
+
+     * - Due Date equals Current Date
+
+     *
+
+     * Eligible bills are automatically updated
+
+     * to PAID status.
+
+     *
+
+     * @return Process completion message
+
+     */
+
+    @Override
+
+    public String autoPayBills() {
+
+
+        List<BillEntity> bills =
+
+                billRepository
+
+                        .findByBillStatusAndShedulePayment(
+
+                                "PENDING",
+
+                                true);
+
+
+        LocalDate today = LocalDate.now();
+
+
+        for (BillEntity bill : bills) {
+
+
+            if (bill.getBillDueDate() != null
+
+                    && bill.getBillDueDate()
+
+                    .equals(today)) {
+
+
+                bill.setBillStatus("PAID");
+
+
+                billRepository.save(bill);
+
+            }
+
+        }
+
+
+        return "Auto Payment Process Completed";
+
+    }
+
+
+    /**
+
+     * =========================================================================
+
+     * Disable Scheduled Payment
+
+     * =========================================================================
+
+     *
+
+     * Disables automatic payment functionality
+
+     * for the specified bill.
+
+     *
+
+     * @param billId Bill Identifier
+
+     * @return Success message
+
+     */
+
+    @Override
+
+    public String disableSchedulePayment(
+
+            Long billId) {
+
+
+        BillEntity bill =
+
+                billRepository.findById(billId)
+
+                        .orElseThrow(() ->
+
+                                new RuntimeException(
+
+                                        "Bill not found"));
+
+
+        bill.setShedulePayment(false);
+
+
+        billRepository.save(bill);
+
+
+        return "Auto Payment Disabled Successfully";
+
+    }
+
 
 }
+ 

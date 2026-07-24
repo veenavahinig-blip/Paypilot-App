@@ -1,343 +1,728 @@
 package com.hcl.paypilot.entity;
 
+
 import java.time.LocalDate;
-import jakarta.persistence.*;
+
+
+import jakarta.persistence.Column;
+
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.GeneratedValue;
+
+import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.Id;
+
+import jakarta.persistence.Table;
+
 
 /**
- * Entity class representing a bill in the PayPilot application.
- *
- * This class is mapped to the BILL_TAB table in Oracle Database. It stores bill
- * details, reminder settings, bill status information, due dates, and snooze
- * details.
- *
- * @author PayPilotTeam
- * @version 1.0
- */
+
+* ============================================================================
+
+* Bill Entity
+
+* ============================================================================
+
+*
+
+* This entity represents bill information within the PayPilot
+
+* Application.
+
+*
+
+* The entity stores complete bill management information including:
+
+* - Bill Details
+
+* - Bill Category
+
+* - Due Date
+
+* - Reminder Settings
+
+* - Snooze Details
+
+* - Payment Status
+
+* - Scheduled Payment Configuration
+
+*
+
+* Database Table:
+
+* BILL_TAB
+
+*
+
+* Features Supported:
+
+* - Add Bill
+
+* - Update Bill
+
+* - Delete Bill
+
+* - Bill Reminders
+
+* - Snooze / Unsnooze Bill
+
+* - Scheduled Payments
+
+* - Auto Pay Processing
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
+
+*/
+
 @Entity
+
 @Table(name = "BILL_TAB")
+
 public class BillEntity {
-	/**
-	 * Unique Bill ID.
-	 */
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "bill_id")
-	private Long billId;
-	/**
-	 * User ID associated with the bill.
-	 */
-	@Column(name = "user_id")
-	private String userId;
-	/**
-	 * Name of the bill. Example: Electricity Bill, Water Bill
-	 */
-	@Column(name = "bill_name")
-	private String billName;
-	/**
-	 * Category of the bill. Example: Utilities, Insurance, Subscription
-	 */
-	@Column(name = "bill_category")
-	private String billCategory;
-	/**
-	 * Amount to be paid for the bill.
-	 */
-	@Column(name = "bill_amount")
-	private double billAmount;
-	/**
-	 * Due date of the bill.
-	 */
-	@Column(name = "bill_due_date")
-	private LocalDate billDueDate;
-
-	/**
-	 * Indicates whether reminder is enabled. Example: YES, NO
-	 */
-	@Column(name = "reminder_enabled")
-	private String reminderEnabled;
-	/**
-	 * Date on which reminder should be sent.
-	 */
-	@Column(name = "reminder_date")
-	private LocalDate reminderDate;
-	/**
-	 * Current status of the bill. Example: PENDING, PAID, OVERDUE
-	 */
-	@Column(name = "bill_status")
-	private String billStatus;
-
-	/**
-	 * Date until which the bill is snoozed.
-	 */
-	@Column(name = "snooze_date")
-	private LocalDate snoozeDate;
-	
-	@Column(name="previousReminderStatus")
-	private String previousReminderStatus;
-	
-	@Column (name="shedulePayment")
-	private boolean shedulePayment;
-
-	
-
-	/**
-	 * 
-	 *
-	 * @param billId          Bill ID
-	 * @param userId          User ID
-	 * @param billName        Bill Name
-	 * @param billCategory    Bill Category
-	 * @param billAmount      Bill Amount
-	 * @param billDueDate     Bill Due Date
-	 * @param reminderEnabled Reminder Enabled Status
-	 * @param reminderDate    Reminder Date
-	 * @param billStatus      Bill Status
-	 * @param snoozeDate      Snooze Date
-	 */
-	
-	/**
-	 * Default Constructor.
-	 */
-	public BillEntity() {
-	}
-	
-
-	/**
-	 * Gets Bill ID.
-	 *
-	 * @return billId
-	 */
-	public Long getBillId() {
-		return billId;
-	}
-
-	/**
-	 * Sets Bill ID.
-	 *
-	 * @param billId Bill ID
-	 */
-	public void setBillId(Long billId) {
-		this.billId = billId;
-	}
-
-	/**
-	 * Gets User ID.
-	 *
-	 * @return userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * Sets User ID.
-	 *
-	 * @param userId User ID
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * Gets Bill Name.
-	 *
-	 * @return billName
-	 */
-	public String getBillName() {
-		return billName;
-	}
-
-	/**
-	 * Sets Bill Name.
-	 *
-	 * @param billName Bill Name
-	 */
-	public void setBillName(String billName) {
-		this.billName = billName;
-	}
-
-	/**
-	 * Gets Bill Category.
-	 *
-	 * @return billCategory
-	 */
-	public String getBillCategory() {
-		return billCategory;
-	}
-
-	/**
-	 * Sets Bill Category.
-	 *
-	 * @param billCategory Bill Category
-	 */
-	public void setBillCategory(String billCategory) {
-		this.billCategory = billCategory;
-	}
-
-	/**
-	 * Gets Bill Amount.
-	 *
-	 * @return billAmount
-	 */
-	public double getBillAmount() {
-		return billAmount;
-	}
-
-	/**
-	 * Sets Bill Amount.
-	 *
-	 * @param billAmount Bill Amount
-	 */
-	public void setBillAmount(double billAmount) {
-		this.billAmount = billAmount;
-	}
-
-	/**
-	 * Gets Bill Due Date.
-	 *
-	 * @return billDueDate
-	 */
-	public LocalDate getBillDueDate() {
-		return billDueDate;
-	}
-
-	/**
-	 * Sets Bill Due Date.
-	 *
-	 * @param billDueDate Bill Due Date
-	 */
-	public void setBillDueDate(LocalDate billDueDate) {
-		this.billDueDate = billDueDate;
-	}
-
-	/**
-	 * Gets Reminder Enabled Status.
-	 *
-	 * @return reminderEnabled
-	 */
-	public String getReminderEnabled() {
-		return reminderEnabled;
-	}
-
-	/**
-	 * Sets Reminder Enabled Status.
-	 *
-	 * @param reminderEnabled Reminder Enabled Status
-	 */
-	public void setReminderEnabled(String reminderEnabled) {
-		this.reminderEnabled = reminderEnabled;
-	}
-
-	/**
-	 * 
-	 * Gets Reminder Date.
-	 *
-	 * 
-	 * 
-	 * @return reminderDate
-	 * 
-	 */
-
-	public LocalDate getReminderDate() {
-
-		return reminderDate;
-
-	}
-
-	/**
-	 * 
-	 * Sets Reminder Date.
-	 *
-	 * 
-	 * 
-	 * @param reminderDate Reminder Date
-	 * 
-	 */
-
-	public void setReminderDate(LocalDate reminderDate) {
-
-		this.reminderDate = reminderDate;
-
-	}
-
-	/**
-	 * 
-	 * Gets Bill Status.
-	 *
-	 * 
-	 * 
-	 * @return billStatus
-	 * 
-	 */
-
-	public String getBillStatus() {
-
-		return billStatus;
-
-	}
-
-	/**
-	 * 
-	 * Sets Bill Status.
-	 *
-	 * 
-	 * 
-	 * @param billStatus Bill Status
-	 * 
-	 */
-
-	public void setBillStatus(String billStatus) {
-
-		this.billStatus = billStatus;
-
-	}
-
-	/**
-	 * 
-	 * Gets Snooze Date.
-	 *
-	 * 
-	 * 
-	 * @return snoozeDate
-	 * 
-	 */
-
-	public LocalDate getSnoozeDate() {
-		return snoozeDate;
-	}
-
-	/**
-	 * 
-	 * Sets Snooze Date.
-	 *
-	 * 
-	 * 
-	 * @param snoozeDate Snooze Date
-	 * 
-	 */
-
-	public void setSnoozeDate(LocalDate snoozeDate) {
-		this.snoozeDate = snoozeDate;
-	}
-
-	public String getPreviousReminderStatus() {
-		return previousReminderStatus;
-	}
-
-	public void setPreviousReminderStatus(String previousReminderStatus) {
-		this.previousReminderStatus = previousReminderStatus;
-	}
 
 
-	public boolean isShedulePayment() {
-		return shedulePayment;
-	}
+    /**
+
+     * Unique identifier for the bill.
+
+     *
+
+     * Automatically generated by the database.
+
+     */
+
+    @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "bill_id")
+
+    private Long billId;
 
 
-	public void setShedulePayment(boolean shedulePayment) {
-		this.shedulePayment = shedulePayment;
-	}
-	
-	
-	
-	
+    /**
+
+     * User identifier associated with the bill.
+
+     */
+
+    @Column(name = "user_id")
+
+    private String userId;
+
+
+    /**
+
+     * Name of the bill.
+
+     *
+
+     * Examples:
+
+     * - Electricity Bill
+
+     * - Water Bill
+
+     * - Internet Bill
+
+     * - Mobile Recharge
+
+     */
+
+    @Column(name = "bill_name")
+
+    private String billName;
+
+
+    /**
+
+     * Category of the bill.
+
+     *
+
+     * Examples:
+
+     * - Utilities
+
+     * - Insurance
+
+     * - Subscription
+
+     * - Broadband
+
+     * - Education
+
+     */
+
+    @Column(name = "bill_category")
+
+    private String billCategory;
+
+
+    /**
+
+     * Total amount to be paid.
+
+     */
+
+    @Column(name = "bill_amount")
+
+    private double billAmount;
+
+
+    /**
+
+     * Due date for bill payment.
+
+     */
+
+    @Column(name = "bill_due_date")
+
+    private LocalDate billDueDate;
+
+
+    /**
+
+     * Indicates whether reminders are enabled.
+
+     *
+
+     * Values:
+
+     * - YES
+
+     * - NO
+
+     */
+
+    @Column(name = "reminder_enabled")
+
+    private String reminderEnabled;
+
+
+    /**
+
+     * Date on which reminder notification
+
+     * should be sent to the user.
+
+     */
+
+    @Column(name = "reminder_date")
+
+    private LocalDate reminderDate;
+
+
+    /**
+
+     * Current payment status of the bill.
+
+     *
+
+     * Possible Values:
+
+     * - PENDING
+
+     * - PAID
+
+     * - OVERDUE
+
+     * - SNOOZED
+
+     */
+
+    @Column(name = "bill_status")
+
+    private String billStatus;
+
+
+    /**
+
+     * Snooze expiration date.
+
+     *
+
+     * Used when a bill is temporarily postponed.
+
+     */
+
+    @Column(name = "snooze_date")
+
+    private LocalDate snoozeDate;
+
+
+    /**
+
+     * Stores the reminder setting before
+
+     * a bill was snoozed.
+
+     *
+
+     * This value is restored when
+
+     * unsnoozing a bill.
+
+     */
+
+    @Column(name = "previousReminderStatus")
+
+    private String previousReminderStatus;
+
+
+    /**
+
+     * Indicates whether auto payment
+
+     * is enabled for the bill.
+
+     *
+
+     * true  = Scheduled payment enabled
+
+     * false = Scheduled payment disabled
+
+     */
+
+    @Column(name = "shedulePayment")
+
+    private boolean shedulePayment;
+
+
+    /**
+
+     * Default Constructor.
+
+     */
+
+    public BillEntity() {
+
+
+    }
+
+
+    /**
+
+     * Retrieves bill identifier.
+
+     *
+
+     * @return Bill ID
+
+     */
+
+    public Long getBillId() {
+
+        return billId;
+
+    }
+
+
+    /**
+
+     * Sets bill identifier.
+
+     *
+
+     * @param billId Bill Identifier
+
+     */
+
+    public void setBillId(Long billId) {
+
+        this.billId = billId;
+
+    }
+
+
+    /**
+
+     * Retrieves user identifier.
+
+     *
+
+     * @return User ID
+
+     */
+
+    public String getUserId() {
+
+        return userId;
+
+    }
+
+
+    /**
+
+     * Sets user identifier.
+
+     *
+
+     * @param userId User ID
+
+     */
+
+    public void setUserId(String userId) {
+
+        this.userId = userId;
+
+    }
+
+
+    /**
+
+     * Retrieves bill name.
+
+     *
+
+     * @return Bill Name
+
+     */
+
+    public String getBillName() {
+
+        return billName;
+
+    }
+
+
+    /**
+
+     * Sets bill name.
+
+     *
+
+     * @param billName Bill Name
+
+     */
+
+    public void setBillName(String billName) {
+
+        this.billName = billName;
+
+    }
+
+
+    /**
+
+     * Retrieves bill category.
+
+     *
+
+     * @return Bill Category
+
+     */
+
+    public String getBillCategory() {
+
+        return billCategory;
+
+    }
+
+
+    /**
+
+     * Sets bill category.
+
+     *
+
+     * @param billCategory Bill Category
+
+     */
+
+    public void setBillCategory(String billCategory) {
+
+        this.billCategory = billCategory;
+
+    }
+
+
+    /**
+
+     * Retrieves bill amount.
+
+     *
+
+     * @return Bill Amount
+
+     */
+
+    public double getBillAmount() {
+
+        return billAmount;
+
+    }
+
+
+    /**
+
+     * Sets bill amount.
+
+     *
+
+     * @param billAmount Bill Amount
+
+     */
+
+    public void setBillAmount(double billAmount) {
+
+        this.billAmount = billAmount;
+
+    }
+
+
+    /**
+
+     * Retrieves bill due date.
+
+     *
+
+     * @return Due Date
+
+     */
+
+    public LocalDate getBillDueDate() {
+
+        return billDueDate;
+
+    }
+
+
+    /**
+
+     * Sets bill due date.
+
+     *
+
+     * @param billDueDate Due Date
+
+     */
+
+    public void setBillDueDate(LocalDate billDueDate) {
+
+        this.billDueDate = billDueDate;
+
+    }
+
+
+    /**
+
+     * Retrieves reminder enabled status.
+
+     *
+
+     * @return Reminder Status
+
+     */
+
+    public String getReminderEnabled() {
+
+        return reminderEnabled;
+
+    }
+
+
+    /**
+
+     * Sets reminder enabled status.
+
+     *
+
+     * @param reminderEnabled Reminder Status
+
+     */
+
+    public void setReminderEnabled(String reminderEnabled) {
+
+        this.reminderEnabled = reminderEnabled;
+
+    }
+
+
+    /**
+
+     * Retrieves reminder date.
+
+     *
+
+     * @return Reminder Date
+
+     */
+
+    public LocalDate getReminderDate() {
+
+        return reminderDate;
+
+    }
+
+
+    /**
+
+     * Sets reminder date.
+
+     *
+
+     * @param reminderDate Reminder Date
+
+     */
+
+    public void setReminderDate(LocalDate reminderDate) {
+
+        this.reminderDate = reminderDate;
+
+    }
+
+
+    /**
+
+     * Retrieves bill payment status.
+
+     *
+
+     * @return Bill Status
+
+     */
+
+    public String getBillStatus() {
+
+        return billStatus;
+
+    }
+
+
+    /**
+
+     * Sets bill payment status.
+
+     *
+
+     * @param billStatus Bill Status
+
+     */
+
+    public void setBillStatus(String billStatus) {
+
+        this.billStatus = billStatus;
+
+    }
+
+
+    /**
+
+     * Retrieves snooze date.
+
+     *
+
+     * @return Snooze Date
+
+     */
+
+    public LocalDate getSnoozeDate() {
+
+        return snoozeDate;
+
+    }
+
+
+    /**
+
+     * Sets snooze date.
+
+     *
+
+     * @param snoozeDate Snooze Date
+
+     */
+
+    public void setSnoozeDate(LocalDate snoozeDate) {
+
+        this.snoozeDate = snoozeDate;
+
+    }
+
+
+    /**
+
+     * Retrieves previous reminder status.
+
+     *
+
+     * Used while restoring reminder settings
+
+     * after unsnoozing a bill.
+
+     *
+
+     * @return Previous Reminder Status
+
+     */
+
+    public String getPreviousReminderStatus() {
+
+        return previousReminderStatus;
+
+    }
+
+
+    /**
+
+     * Sets previous reminder status.
+
+     *
+
+     * @param previousReminderStatus Previous Reminder Status
+
+     */
+
+    public void setPreviousReminderStatus(
+
+            String previousReminderStatus) {
+
+        this.previousReminderStatus = previousReminderStatus;
+
+    }
+
+
+    /**
+
+     * Retrieves scheduled payment status.
+
+     *
+
+     * @return true if auto payment enabled
+
+     */
+
+    public boolean isShedulePayment() {
+
+        return shedulePayment;
+
+    }
+
+
+    /**
+
+     * Sets scheduled payment status.
+
+     *
+
+     * @param shedulePayment Scheduled Payment Flag
+
+     */
+
+    public void setShedulePayment(boolean shedulePayment) {
+
+        this.shedulePayment = shedulePayment;
+
+    }
+
+
 }
+ 

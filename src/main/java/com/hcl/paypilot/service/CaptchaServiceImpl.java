@@ -28,25 +28,57 @@ import org.springframework.web.client.RestClientException;
 
 /**
 
-* Service implementation responsible for validating Google reCAPTCHA
+* ============================================================================
 
-* tokens received from the client application.
+* CAPTCHA Service Implementation
 
-*
-
-* This service communicates with Google's reCAPTCHA verification API
-
-* to determine whether a CAPTCHA challenge was completed successfully.
+* ============================================================================
 
 *
 
-* It also supports local development and testing by allowing
+* This service implementation is responsible for validating Google
 
-* a mock token or Google's test secret key to bypass validation.
+* reCAPTCHA tokens received from the client application.
 
 *
 
-* @author PayPilot Team
+* The implementation communicates with Google's reCAPTCHA Verification API
+
+* to determine whether a CAPTCHA challenge was successfully completed.
+
+*
+
+* Features Supported:
+
+* - Google reCAPTCHA Verification
+
+* - Bot Prevention
+
+* - Login Security Validation
+
+* - Mock Token Support for Local Development
+
+* - Google Test Secret Support
+
+*
+
+* Validation Flow:
+
+* 1. Validate incoming token
+
+* 2. Allow test bypass scenarios
+
+* 3. Send request to Google Verification API
+
+* 4. Process verification response
+
+* 5. Return validation result
+
+*
+
+* Author: PayPilot Team
+
+* ============================================================================
 
 */
 
@@ -57,9 +89,23 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
 
-     * Google's official test secret key used for
+     * Google's official reCAPTCHA test secret key.
 
-     * development and testing environments.
+     *
+
+     * Used for:
+
+     * - Local Development
+
+     * - Testing Environments
+
+     * - QA Validation
+
+     *
+
+     * Official Google Test Secret:
+
+     * 6LeIxAcTAAAAAGG-vFI1TnRWxMZNF65lW9xsIE1u
 
      */
 
@@ -70,13 +116,17 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
 
-     * Secret key used to authenticate requests
-
-     * sent to Google's reCAPTCHA verification service.
+     * Google reCAPTCHA Secret Key.
 
      *
 
-     * Value is loaded from application properties.
+     * Loaded from application.properties.
+
+     *
+
+     * Example:
+
+     * google.recaptcha.secret=xxxxxxxxxxxx
 
      */
 
@@ -87,11 +137,17 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
 
-     * Google reCAPTCHA verification endpoint URL.
+     * Google reCAPTCHA Verification API URL.
 
      *
 
-     * Value is loaded from application properties.
+     * Loaded from application.properties.
+
+     *
+
+     * Example:
+
+     * https://www.google.com/recaptcha/api/siteverify
 
      */
 
@@ -102,35 +158,63 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
 
-     * Verifies the reCAPTCHA token received from the client.
+     * =========================================================================
+
+     * Verify CAPTCHA Token
+
+     * =========================================================================
 
      *
 
-     * This method:
-
-     * <ul>
-
-     * <li>Checks whether the token is null or empty.</li>
-
-     * <li>Allows bypass for testing using a mock token.</li>
-
-     * <li>Sends a verification request to Google's reCAPTCHA API.</li>
-
-     * <li>Processes the API response and returns the validation result.</li>
-
-     * </ul>
+     * Validates the reCAPTCHA token received from the frontend.
 
      *
 
-     * If an exception occurs while communicating with Google,
+     * Validation Process:
 
-     * the verification is considered unsuccessful.
+     * - Checks for null or empty token
+
+     * - Supports mock token for testing
+
+     * - Supports Google test secret bypass
+
+     * - Calls Google Verification API
+
+     * - Processes verification response
+
+     * - Returns validation result
 
      *
 
-     * @param token reCAPTCHA token received from the client side
+     * Local Testing Support:
 
-     * @return true if verification succeeds; false otherwise
+     * - Token = mock_token
+
+     * - Google Test Secret Key
+
+     *
+
+     * Example:
+
+     * Frontend Login
+
+     * → reCAPTCHA Solved
+
+     * → Token Generated
+
+     * → Token Sent To Backend
+
+     * → Verification Performed
+
+     * → Login Allowed/Rejected
+
+     *
+
+     * @param token Client-side reCAPTCHA token
+
+     * @return true if verification succeeds,
+
+     *         false otherwise
 
      */
 
@@ -141,11 +225,16 @@ public class CaptchaServiceImpl implements CaptchaService {
 
         /**
 
-         * Returns false if token is missing or empty.
+         * Validate incoming token.
+
+         *
+
+         * Reject request if token is null or empty.
 
          */
 
         if (token == null || token.trim().isEmpty()) {
+
 
             return false;
 
@@ -154,13 +243,18 @@ public class CaptchaServiceImpl implements CaptchaService {
 
         /**
 
-         * Bypass validation in local testing scenarios.
+         * Allow bypass validation for:
+
+         * - Local testing
+
+         * - QA environments
 
          */
 
         if ("mock_token".equals(token)
 
                 || GOOGLE_TEST_SECRET.equals(recaptchaSecret)) {
+
 
             return true;
 
@@ -172,22 +266,35 @@ public class CaptchaServiceImpl implements CaptchaService {
 
             /**
 
-             * Configure request headers for sending
+             * Create HTTP headers.
 
-             * form-urlencoded data to Google.
+             *
+
+             * Google API expects
+
+             * application/x-www-form-urlencoded.
 
              */
 
             HttpHeaders headers = new HttpHeaders();
 
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            headers.setContentType(
+
+                    MediaType.APPLICATION_FORM_URLENCODED);
 
 
             /**
 
-             * Create request body containing the
+             * Prepare request body.
 
-             * secret key and CAPTCHA response token.
+             *
+
+             * Required Parameters:
+
+             * - secret
+
+             * - response
 
              */
 
@@ -198,25 +305,28 @@ public class CaptchaServiceImpl implements CaptchaService {
 
             body.add("secret", recaptchaSecret);
 
+
             body.add("response", token);
 
 
             /**
 
-             * Create RestTemplate instance for
+             * Create REST client used for
 
-             * communicating with external APIs.
+             * external API communication.
 
              */
 
-            RestTemplate restTemplate = new RestTemplate();
+            RestTemplate restTemplate =
+
+                    new RestTemplate();
 
 
             /**
 
-             * Send verification request to Google's
+             * Send verification request
 
-             * reCAPTCHA verification endpoint.
+             * to Google's API endpoint.
 
              */
 
@@ -228,14 +338,12 @@ public class CaptchaServiceImpl implements CaptchaService {
 
                             new HttpEntity<>(body, headers),
 
-                            RecaptchaResponse.class
-
-                    );
+                            RecaptchaResponse.class);
 
 
             /**
 
-             * Extract verification response body.
+             * Extract response body.
 
              */
 
@@ -246,7 +354,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
             /**
 
-             * Handle empty response from Google.
+             * Handle unexpected empty response.
 
              */
 
@@ -255,7 +363,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 
                 System.err.println(
 
-                        "reCAPTCHA verification failed: empty response from Google.");
+                        "reCAPTCHA verification failed: "
+
+                                + "empty response from Google.");
 
 
                 return false;
@@ -265,7 +375,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 
             /**
 
-             * Log validation errors if verification fails.
+             * Log validation errors returned
+
+             * by Google's API.
 
              */
 
@@ -283,21 +395,31 @@ public class CaptchaServiceImpl implements CaptchaService {
 
             /**
 
-             * Return CAPTCHA verification result.
+             * Return verification result.
 
              */
 
             return recaptchaResponse.isSuccess();
 
 
-        } catch (RestClientException e) {
+        } catch (RestClientException exception) {
 
 
             /**
 
-             * Handle communication failures with
+             * Handle communication failures.
 
-             * Google's reCAPTCHA verification service.
+             *
+
+             * Possible Reasons:
+
+             * - Network issue
+
+             * - Invalid URL
+
+             * - Google API unavailable
+
+             * - Timeout
 
              */
 
@@ -305,7 +427,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
                     "reCAPTCHA verification request failed: "
 
-                            + e.getMessage());
+                            + exception.getMessage());
 
 
             return false;
